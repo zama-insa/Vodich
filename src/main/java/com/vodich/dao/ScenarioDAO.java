@@ -6,7 +6,7 @@ import com.vodich.core.bean.Scenario;
 
 public interface ScenarioDAO {
 	
-	public void save(Scenario scenario);
+	public void save(Scenario scenario) throws DAOException;
 
 	public void delete(String scenarioId);
 	

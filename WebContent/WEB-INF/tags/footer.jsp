@@ -1,5 +1,4 @@
 <footer>
-    <p>&nbsp;Copyright ©ZAMA 2015, INSA de Toulouse</p>
+    <p>&nbsp;Copyright ©ZAMA, INSA de Toulouse 2015</p>
 </footer>
-
 <script src="res/lib/bootstrap/js/bootstrap.min.js"></script>
