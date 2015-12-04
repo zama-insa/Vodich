@@ -1,4 +1,4 @@
-package com.vodich.web;
+package com.vodich.web.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,17 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.vodich.web.util.WebUtils;
+
 /**
- * Servlet implementation class DefaultServlet
+ * Servlet implementation class CreateScenarioServlet
  */
-@WebServlet("/")
-public class DefaultPageServlet extends HttpServlet {
+@WebServlet("/create")
+public class CreateScenarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DefaultPageServlet() {
+    public CreateScenarioServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,16 +28,14 @@ public class DefaultPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		WebUtils.forward(request, response, "create-scenario.jsp");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		WebUtils.forward(request, response, "post-create-scenario.jsp");
 	}
 
 }
