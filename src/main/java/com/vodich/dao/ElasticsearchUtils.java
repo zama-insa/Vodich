@@ -3,9 +3,11 @@ package com.vodich.dao;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 
@@ -33,9 +35,20 @@ public class ElasticsearchUtils {
         // Create index
         try {
         	esClient.admin().indices().prepareCreate("vodich").execute().actionGet();
-        } catch (Throwable e) {
-        	//never mind if it existed
+        } catch (IndexAlreadyExistsException e) {
+        	//never mind if index already exists
         }
+        
+        //Wait for healty status of shards
+        ClusterHealthResponse health;
+        do {
+            System.out.println("Waiting for elasticsearch yellow status");
+            health = esClient.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+        } while (health.isTimedOut());
+	}
+	
+	public static void close() {
+		esClient.close();
 	}
 	
 	public static IndexResponse saveScenario(Scenario scenario) {
@@ -47,5 +60,6 @@ public class ElasticsearchUtils {
 			return null;
 		}
 	}
+	
 	
 }

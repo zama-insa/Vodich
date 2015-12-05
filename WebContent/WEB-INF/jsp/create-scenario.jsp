@@ -6,7 +6,7 @@
 			<c:if test="${not empty error}">
 				<div class="alert alert-danger alert-dismissible" role="alert">
 				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  <strong>Form Error</strong><br/> ${error}
+				  <strong>Error</strong><br/> ${error}
 				</div>
 			</c:if>
 			<form method="post" id="create-scenario">

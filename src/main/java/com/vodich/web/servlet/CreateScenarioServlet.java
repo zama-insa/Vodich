@@ -92,7 +92,7 @@ public class CreateScenarioServlet extends HttpServlet {
 		try {
 			scenarioDao.save(scenario);
 		} catch (DAOException e) {
-			request.setAttribute(ATT_ERROR_MSG, e.getErrorMessage() + "<br/>" + e.getCause().getMessage());
+			request.setAttribute(ATT_ERROR_MSG, "Database error : Save scenario failed");
 			WebUtils.forward(request, response, "create-scenario.jsp");
 			return;
 		}
