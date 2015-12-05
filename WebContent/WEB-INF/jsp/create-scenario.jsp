@@ -16,10 +16,16 @@
 	</style>
 	<script>
 	$(document).ready(function() {
-		$("i.fa-minus").click(function(e){
-			console.log("haha");
-			window.location.href = "create?action=removeFlow";
-			e.preventDefault();
+		$("i.fa-minus").click(function(event){
+			$("input#action").val("removeFlow");
+			$("#create-form").submit();
+			event.preventDefault();
+			return false;
+		});
+		$("#addFlowButton").click(function(event){
+			$("input#action").val("addFlow");
+			$("#create-form").submit();
+			event.preventDefault();
 			return false;
 		});
 	});
@@ -41,7 +47,7 @@
 		</div>
 		</div>
 		<div class="row">
-		<form method="post" id="create-scenario">
+		<form method="post" id="create-form">
 		<div class="col-md-12">
 		<div class="row">
 		<div class="col-md-6 col-md-offset-4">
@@ -63,7 +69,7 @@
 						</a>
 					</li>
 				</c:forEach>
-				<li role="presentation"><a href="create?action=addFlow"><i class="fa fa-plus"></i></a></li>
+				<li role="presentation"><a href="#" id="addFlowButton"><i class="fa fa-plus"></i></a></li>
 			</ul>
 		</div>
 		<div class="col-md-6">
@@ -107,6 +113,7 @@
 					</div>
 					<button class="btn btn-primary" type=submit>Create</button>
 					<input type="hidden" id="flowcount" name="flowcount" value="${flowcount}"/>
+					<input type="hidden" id="action" name="action" value=""/>
 				</div>
 			</c:forEach>
 			</div>

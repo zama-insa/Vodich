@@ -65,11 +65,6 @@ public class CreateScenarioServlet extends HttpServlet {
 		Integer flowCount = (Integer) request.getSession().getAttribute(ATT_FLOW_COUNT);
 		if (flowCount == null) flowCount = 1;
 		saveUserInputs(request, flowCount);
-		String action = (String) request.getParameter("action");
-		if (action != null) {
-			if ("addFlow".equals(action)) flowCount += 1;
-			else if ("removeFlow".equals(action) && flowCount > 1) flowCount -= 1;
-		}
 		request.getSession().setAttribute(ATT_FLOW_COUNT, flowCount);
 		request.getSession().setAttribute(ATT_CURRENT_FLOW_VIEW, 1);
 		WebUtils.forward(request, response, "create-scenario.jsp");
@@ -80,8 +75,36 @@ public class CreateScenarioServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = (String) request.getParameter("action");
+		if (action == null) {
+			actionCreate(request, response);
+		} else if ("addFlow".equals(action)) {
+			actionAddFlow(request,response);
+		} else if ("removeFlow".equals(action)) {
+			actionRemoveFlow(request,response);
+		}
+	}
 
-		
+	private void actionRemoveFlow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int flowCount = Integer.parseInt(request.getParameter(ATT_FLOW_COUNT));
+		if (flowCount > 1) {
+			flowCount -= 1;
+			request.getSession().setAttribute(ATT_FLOW_COUNT, flowCount);
+		}
+		saveUserInputs(request, flowCount);
+		WebUtils.forward(request, response, "create-scenario.jsp");
+	}
+
+	private void actionAddFlow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int flowCount = Integer.parseInt(request.getParameter(ATT_FLOW_COUNT));
+		flowCount += 1;
+		saveUserInputs(request, flowCount);
+		request.getSession().setAttribute(ATT_FLOW_COUNT, flowCount);
+		WebUtils.forward(request, response, "create-scenario.jsp");
+	}
+
+	private void actionCreate(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		int flowCount = Integer.parseInt(request.getParameter(ATT_FLOW_COUNT));
 		saveUserInputs(request, flowCount);
 		String scenarioName = request.getParameter(PARAM_NAME);
