@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import com.vodich.business.ScenarioService;
 import com.vodich.business.ScenarioServiceImpl;
 import com.vodich.core.bean.Flow;
 import com.vodich.core.bean.Scenario;
+import com.vodich.core.util.VodichUtils;
 import com.vodich.dao.DAOException;
 import com.vodich.dao.ScenarioDAO;
 import com.vodich.dao.ScenarioDAOImpl;
@@ -30,21 +32,23 @@ import com.vodich.web.util.WebUtils;
  */
 @WebServlet("/create")
 public class CreateScenarioServlet extends HttpServlet {
-	private static final String ATT_ERROR_MSG = "error";
 	private static final String PARAM_NAME = "name";
-	private static final String PARAM_FLOW_COUNT = "flowcount";
 	private static final String PARAM_STOP_TIME = "stoptime";
 	private static final String PARAM_START_TIME = "starttime";
 	private static final String PARAM_FREQUENCY = "frequency";
 	private static final String PARAM_PROCESS_TIME = "processtime";
 	private static final String PARAM_PRODUCER = "producer";
 	private static final String PARAM_CONSUMER = "consumer";
+
+	private static final String ATT_ERROR_MSG = "error";
+	private static final String ATT_FLOW_COUNT = "flowcount";
 	// attribute that enables parameters saving
 	private static final String ATT_MAP = "map";
 	// parameters from business service
 	private static final String ATT_PRODUCER_NUM = "PRODUCER_NUM";
 	private static final String ATT_CONSUMER_NUM = "CONSUMER_NUM";
 	private static final long serialVersionUID = 1L;
+	private static final String ATT_CURRENT_FLOW_VIEW = "currentflowview";
 	private ScenarioService scenarioService;
 
 	@Override
@@ -56,22 +60,36 @@ public class CreateScenarioServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute(ATT_MAP, null);
-		request.setAttribute(ATT_CONSUMER_NUM, CommonServiceImpl.getInstance().getConsumerNum());
-		request.setAttribute(ATT_PRODUCER_NUM, CommonServiceImpl.getInstance().getConsumerNum());
-		request.setAttribute(PARAM_FLOW_COUNT, 1);
+		request.getSession().setAttribute(ATT_CONSUMER_NUM, CommonServiceImpl.getInstance().getConsumerNum());
+		request.getSession().setAttribute(ATT_PRODUCER_NUM, CommonServiceImpl.getInstance().getConsumerNum());
+		Integer flowCount = (Integer) request.getSession().getAttribute(ATT_FLOW_COUNT);
+		if (flowCount == null) flowCount = 1;
+		saveUserInputs(request, flowCount);
+		String action = (String) request.getParameter("action");
+		if (action != null) {
+			if ("addFlow".equals(action)) flowCount += 1;
+			else if ("removeFlow".equals(action) && flowCount > 1) flowCount -= 1;
+		}
+		request.getSession().setAttribute(ATT_FLOW_COUNT, flowCount);
+		request.getSession().setAttribute(ATT_CURRENT_FLOW_VIEW, 1);
 		WebUtils.forward(request, response, "create-scenario.jsp");
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute(ATT_CONSUMER_NUM, CommonServiceImpl.getInstance().getConsumerNum());
-		request.setAttribute(ATT_PRODUCER_NUM, CommonServiceImpl.getInstance().getConsumerNum());
+
 		
-		int flowCount = Integer.parseInt(request.getParameter(PARAM_FLOW_COUNT));
-		saveAttributes(request, flowCount);
+		int flowCount = Integer.parseInt(request.getParameter(ATT_FLOW_COUNT));
+		saveUserInputs(request, flowCount);
+		String scenarioName = request.getParameter(PARAM_NAME);
+		if (VodichUtils.isNullOrEmpty(scenarioName)) {
+			request.setAttribute(ATT_ERROR_MSG, "The scenario name is not specified");
+			WebUtils.forward(request, response, "create-scenario.jsp");
+			return;
+		}
 		List<Flow> flows = new ArrayList<>();
 		for (int i = 1; i <= flowCount; i++) {
 			Flow flow = new Flow();
@@ -90,7 +108,7 @@ public class CreateScenarioServlet extends HttpServlet {
 			flows.add(flow);
 		}
 		Scenario scenario = new Scenario();
-		scenario.setId(request.getParameter(PARAM_NAME));
+		scenario.setId(scenarioName);
 		try {
 			scenarioService.save(scenario);
 		} catch (DAOException e) {
@@ -103,9 +121,9 @@ public class CreateScenarioServlet extends HttpServlet {
 	}
 	
 	// Save parameters as request attributes to keep the form parameters
-	private void saveAttributes(HttpServletRequest request, int flowCount) {
+	private void saveUserInputs(HttpServletRequest request, int flowCount) {
 		request.setAttribute(PARAM_NAME, request.getParameter(PARAM_NAME));
-		request.setAttribute(PARAM_FLOW_COUNT, flowCount);
+		request.setAttribute(ATT_FLOW_COUNT, flowCount);
 		Map<String, List<Object>> map= new HashMap();
 		map.put(PARAM_CONSUMER, new ArrayList<Object>());
 		map.put(PARAM_PRODUCER, new ArrayList<Object>());
@@ -113,6 +131,7 @@ public class CreateScenarioServlet extends HttpServlet {
 		map.put(PARAM_FREQUENCY, new ArrayList<Object>());
 		map.put(PARAM_START_TIME, new ArrayList<Object>());
 		map.put(PARAM_STOP_TIME, new ArrayList<Object>());
+		System.out.println(request.getParameter(PARAM_PRODUCER + 1));
 		for (int i = 1; i <= flowCount; i++){
 			map.get(PARAM_CONSUMER).add(request.getParameter(PARAM_CONSUMER + i));
 			map.get(PARAM_PRODUCER).add(request.getParameter(PARAM_PRODUCER + i));
