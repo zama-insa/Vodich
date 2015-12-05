@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.elasticsearch.action.index.IndexResponse;
 
+import com.vodich.business.CommonService;
+import com.vodich.business.CommonServiceImpl;
 import com.vodich.core.bean.Scenario;
 
 public class ScenarioDAOImpl implements ScenarioDAO {
@@ -31,6 +33,15 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 	@Override
 	public List<Scenario> loadAll() {
 		return null;
+	}
+	
+	private ScenarioDAOImpl() {}
+	private static ScenarioDAOImpl instance;
+	public static ScenarioDAO getInstance() {
+		if (instance == null) {
+			instance = new ScenarioDAOImpl();
+		}
+		return instance;
 	}
 
 }

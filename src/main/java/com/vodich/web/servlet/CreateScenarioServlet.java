@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.vodich.business.CommonService;
 import com.vodich.business.CommonServiceImpl;
+import com.vodich.business.ScenarioService;
+import com.vodich.business.ScenarioServiceImpl;
 import com.vodich.core.bean.Flow;
 import com.vodich.core.bean.Scenario;
 import com.vodich.dao.DAOException;
@@ -43,11 +45,11 @@ public class CreateScenarioServlet extends HttpServlet {
 	private static final String ATT_PRODUCER_NUM = "PRODUCER_NUM";
 	private static final String ATT_CONSUMER_NUM = "CONSUMER_NUM";
 	private static final long serialVersionUID = 1L;
-	private ScenarioDAO scenarioDao;
+	private ScenarioService scenarioService;
 
 	@Override
 	public void init() throws ServletException {
-		scenarioDao = new ScenarioDAOImpl();
+		scenarioService = ScenarioServiceImpl.getInstance();
 	}
 
 	/**
@@ -90,7 +92,7 @@ public class CreateScenarioServlet extends HttpServlet {
 		Scenario scenario = new Scenario();
 		scenario.setId(request.getParameter(PARAM_NAME));
 		try {
-			scenarioDao.save(scenario);
+			scenarioService.save(scenario);
 		} catch (DAOException e) {
 			request.setAttribute(ATT_ERROR_MSG, "Database error : Save scenario failed");
 			WebUtils.forward(request, response, "create-scenario.jsp");
@@ -119,7 +121,7 @@ public class CreateScenarioServlet extends HttpServlet {
 			map.get(PARAM_START_TIME).add(request.getParameter(PARAM_START_TIME + i));
 			map.get(PARAM_STOP_TIME).add(request.getParameter(PARAM_STOP_TIME + i));
 		}
-		request.setAttribute(ATT_MAP, map);
+		request.getSession().setAttribute(ATT_MAP, map);
 	}
 
 }
