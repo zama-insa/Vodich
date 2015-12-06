@@ -76,7 +76,7 @@ public class CreateScenarioServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = (String) request.getParameter("action");
-		if (action == null) {
+		if (VodichUtils.isNullOrEmpty(action)) {
 			actionCreate(request, response);
 		} else if ("addFlow".equals(action)) {
 			actionAddFlow(request,response);
@@ -154,7 +154,6 @@ public class CreateScenarioServlet extends HttpServlet {
 		map.put(PARAM_FREQUENCY, new ArrayList<Object>());
 		map.put(PARAM_START_TIME, new ArrayList<Object>());
 		map.put(PARAM_STOP_TIME, new ArrayList<Object>());
-		System.out.println(request.getParameter(PARAM_PRODUCER + 1));
 		for (int i = 1; i <= flowCount; i++){
 			map.get(PARAM_CONSUMER).add(request.getParameter(PARAM_CONSUMER + i));
 			map.get(PARAM_PRODUCER).add(request.getParameter(PARAM_PRODUCER + i));
