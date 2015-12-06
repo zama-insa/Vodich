@@ -132,6 +132,7 @@ public class CreateScenarioServlet extends HttpServlet {
 		}
 		Scenario scenario = new Scenario();
 		scenario.setId(scenarioName);
+		scenario.setFlows(flows);
 		try {
 			scenarioService.save(scenario);
 		} catch (DAOException e) {
