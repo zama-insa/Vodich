@@ -20,7 +20,7 @@
       </h4>
 	</div>
 	<div class="col-xs-6 col-sm-3">
-	<button class="btn btn-primary" type=button onclick="location.href='launch'">Launch</button>
+	<button class="btn btn-primary" type=button onclick="location.href='launch?id=${scenario.id}'">Launch</button>
 	</div>
 	<div class="col-xs-6 col-sm-3">
 	<button class="btn btn-primary" type=button onclick="location.href='default'">Delete</button>

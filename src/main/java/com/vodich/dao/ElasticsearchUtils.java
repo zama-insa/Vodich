@@ -11,6 +11,7 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
@@ -89,6 +90,24 @@ public class ElasticsearchUtils {
 			}
 		 }
 		 return listScenarii;
+	}
+	
+	public static Scenario load(String scenarioID){
+		Scenario scenario = new Scenario();
+		SearchResponse response = esClient.prepareSearch("vodich")
+				.setTypes("scenario")
+				.setQuery(QueryBuilders.termQuery("id", scenarioID))
+				.execute()
+				.actionGet();
+		try {
+			scenario = mapper.readValue(response.getHits().getAt(0).getSourceAsString(), Scenario.class);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return scenario;
+
 	}
 	
 
