@@ -1,4 +1,4 @@
-package com.vodich.web.util;
+package com.vodich.core.util;
 
 import java.io.IOException;
 

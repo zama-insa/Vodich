@@ -14,7 +14,7 @@ import com.vodich.business.ScenarioService;
 import com.vodich.business.ScenarioServiceImpl;
 import com.vodich.core.bean.Scenario;
 import com.vodich.dao.ElasticsearchUtils;
-import com.vodich.web.util.WebUtils;
+import com.vodich.core.util.WebUtils;
 
 /**
  * Servlet implementation class DefaultServlet
