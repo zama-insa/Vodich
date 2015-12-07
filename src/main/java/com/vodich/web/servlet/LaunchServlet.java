@@ -48,8 +48,8 @@ public class LaunchServlet extends HttpServlet {
 			scenario =  scenarioService.load(scenarioID);
 			request.setAttribute("scenario", scenario);
 		} catch (DAOException e) {
-			request.setAttribute(ATT_ERROR_MSG, "Database error : Save scenario failed");
-			WebUtils.forward(request, response, "create-scenario.jsp");
+			request.setAttribute(ATT_ERROR_MSG, "Database error : Load scenario failed");
+			WebUtils.forward(request, response, "launch.jsp");
 			
 		}
 		
