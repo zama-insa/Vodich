@@ -32,7 +32,7 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 
 	@Override
 	public List<Scenario> loadAll() {
-		return null;
+		return ElasticsearchUtils.loadScenarii();
 	}
 	
 	private ScenarioDAOImpl() {}
@@ -43,5 +43,6 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 		}
 		return instance;
 	}
-
+	
+	
 }

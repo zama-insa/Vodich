@@ -1,5 +1,7 @@
 package com.vodich.business;
 
+import java.util.List;
+
 import com.vodich.core.bean.Scenario;
 import com.vodich.dao.DAOException;
 import com.vodich.dao.ScenarioDAO;
@@ -36,5 +38,13 @@ public class ScenarioServiceImpl implements ScenarioService {
 		}
 		return instance;
 	}
+
+	@Override
+	public List<Scenario> loadAll() {
+		// TODO Auto-generated method stub
+		return scenarioDAO.loadAll();
+	}
+	
+	
 
 }

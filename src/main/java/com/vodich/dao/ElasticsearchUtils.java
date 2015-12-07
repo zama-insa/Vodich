@@ -1,15 +1,20 @@
 package com.vodich.dao;
 
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
+import org.elasticsearch.search.SearchHit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,5 +66,31 @@ public class ElasticsearchUtils {
 		}
 	}
 	
+	public static List<Scenario> loadScenarii(){
+		
+		List<Scenario> listScenarii = new ArrayList<Scenario>();
+		
+		//Query to search in ES
+		SearchResponse response = esClient.prepareSearch("vodich")
+				 .setTypes("scenario")
+				 .execute()
+				 .actionGet();
+		
+		//Serialize to Scenario
+		 for(SearchHit hit : response.getHits()){
+			Scenario scenario;
+			try {
+				scenario = mapper.readValue(hit.getSourceAsString(), Scenario.class);
+				listScenarii.add(scenario);
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }
+		 return listScenarii;
+	}
+	
+
 	
 }
