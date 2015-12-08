@@ -4,12 +4,12 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public int getConsumerNum() {
-		return 5; // fixed for now
+		return 5; // constant for now
 	}
 
 	@Override
 	public int getProducerNum() {
-		return 5; // fixed for now
+		return 5; // constant for now
 	}
 	
 	private CommonServiceImpl() {}

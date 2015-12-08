@@ -8,44 +8,53 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.elasticsearch.bootstrap.Elasticsearch;
-
 import com.vodich.business.ScenarioService;
 import com.vodich.business.ScenarioServiceImpl;
 import com.vodich.core.bean.Scenario;
-import com.vodich.dao.ElasticsearchUtils;
 import com.vodich.core.util.WebUtils;
+import com.vodich.dao.DAOException;
 
 /**
- * Servlet implementation class DefaultServlet
+ * Servlet implementation class LaunchServlet
  */
-@WebServlet("/default")
-public class DefaultPageServlet extends HttpServlet {
+@WebServlet("/launch")
+public class LaunchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String ATT_ERROR_MSG = "error";
+	private static final String ATT_SCENARIO_ID = "id";
 	private ScenarioService scenarioService;
 
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DefaultPageServlet() {
+    public LaunchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
+
     @Override
 	public void init() throws ServletException {
 		scenarioService = ScenarioServiceImpl.getInstance();
 	}
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Scenario scenario = new Scenario();
+
+		String scenarioID  = (String)request.getParameter(ATT_SCENARIO_ID);
+		try {
+			scenario =  scenarioService.load(scenarioID);
+			request.setAttribute("scenario", scenario);
+		} catch (DAOException e) {
+			request.setAttribute(ATT_ERROR_MSG, "Database error : Load scenario failed");
+			WebUtils.forward(request, response, "launch.jsp");
+			
+		}
 		
-		request.setAttribute("scenarii",scenarioService.loadAll());
-		WebUtils.forward(request, response, "default.jsp");
-		//response.getWriter().append("Served at: "+a).append(request.getContextPath());
+		WebUtils.forward(request, response, "launch.jsp"); 
+		
 	}
 
 	/**
@@ -53,7 +62,6 @@ public class DefaultPageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

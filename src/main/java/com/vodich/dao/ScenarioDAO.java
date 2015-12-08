@@ -10,7 +10,7 @@ public interface ScenarioDAO {
 
 	public void delete(String scenarioId);
 	
-	public Scenario load(String scenarioId);
+	public Scenario load(String scenarioId) throws DAOException;
 	
-	public List<Scenario> loadAll();
+	public List<Scenario> loadAll() ;
 }

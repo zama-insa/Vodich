@@ -26,8 +26,12 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 	}
 
 	@Override
-	public Scenario load(String scenarioId) {
-		return null;
+	public Scenario load(String scenarioId) throws DAOException {
+		try{
+			return ElasticsearchUtils.load(scenarioId);
+		}catch (Exception e){
+			throw new DAOException("[DAO] Load Scenario Failed", e);
+		}
 	}
 
 	@Override

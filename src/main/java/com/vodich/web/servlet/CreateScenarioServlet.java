@@ -22,10 +22,10 @@ import com.vodich.business.ScenarioServiceImpl;
 import com.vodich.core.bean.Flow;
 import com.vodich.core.bean.Scenario;
 import com.vodich.core.util.VodichUtils;
-import com.vodich.core.util.WebUtils;
 import com.vodich.dao.DAOException;
 import com.vodich.dao.ScenarioDAO;
 import com.vodich.dao.ScenarioDAOImpl;
+import com.vodich.core.util.WebUtils;
 
 /**
  * Servlet implementation class CreateScenarioServlet
