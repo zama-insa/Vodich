@@ -66,7 +66,7 @@ public class JMSUtils {
 	 * @return
 	 * @throws JMSException 
 	 */
-	public String read(long timeout) throws JMSException {
+	public String receive(long timeout) throws JMSException {
 		TextMessage textMessage = (TextMessage) msgConsumer.receive(timeout);
 		return textMessage.getText();
 	}
@@ -77,7 +77,7 @@ public class JMSUtils {
 	 * @return
 	 * @throws JMSException 
 	 */
-	public String read() throws JMSException {
+	public String receive() throws JMSException {
 		TextMessage textMessage = (TextMessage) msgConsumer.receive();
 		return textMessage.getText();
 	}

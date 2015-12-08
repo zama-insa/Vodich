@@ -1,19 +1,9 @@
-package com.vodich.web.servlet;
+package com.vodich.web.servlet.test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.annotation.Resource;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
-import javax.jms.Queue;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-import javax.jms.Topic;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.vodich.core.util.JMSUtils;
 
-@WebServlet("/test/jms")
-public class JMSTestServlet extends HttpServlet {
+@WebServlet({"/test/jms/receive","/test/jms/recv"})
+public class JMSQueueRecvServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	JMSUtils jmsUtils;
@@ -47,7 +37,7 @@ public class JMSTestServlet extends HttpServlet {
 
 		try {
 			jmsUtils.startConnection();
-			body = jmsUtils.read();
+			body = jmsUtils.receive();
 			jmsUtils.stopConnection();
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
