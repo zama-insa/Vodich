@@ -70,7 +70,6 @@ public class CreateScenarioServlet extends HttpServlet {
 		WebUtils.forward(request, response, "create-scenario.jsp");
 	}
 
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
