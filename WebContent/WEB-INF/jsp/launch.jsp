@@ -1,5 +1,4 @@
 <t:baseLayout>
-
 <div class="col-md-10">
 			<c:if test="${not empty error}">
 				<div class="alert alert-danger alert-dismissible" role="alert">
@@ -10,16 +9,7 @@
 			
 			</div>
 <c:if test ="${empty error}">
-<p>ScenarioID  : ${scenario.id }<p>
-<c:forEach items="${scenario.flows}" var="flow">
-		<p>Consumer : ${flow.consumer }</p>
-      	<p>Producer : ${flow.producer }</p>
-      	<p>Frequency : ${flow.frequency }</p>
-      	<p>ProcessTime : ${flow.processTime }</p>
-      	<p>Start : ${flow.start }</p>
-      	<p>Stop : ${flow.stop }</p>
-      	<p>MessageLoad : ${flow.messageLoad }</p>
-</c:forEach>
+<p>Launch Done<p>
 </c:if>
 
 </t:baseLayout>

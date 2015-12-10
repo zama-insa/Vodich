@@ -19,16 +19,19 @@ public class JMSUtils {
 	private Connection connection;
 	private Session session;
 	private MessageConsumer msgConsumer;
-	private MessageProducer msgProducer;
-	private Topic topic;
+	private MessageProducer[] msgProducer= new MessageProducer[VodichUtils.NB_CONSUMER];
+	private Topic[] topics;
 	
-	private JMSUtils(ConnectionFactory connectionFactory, Queue queue, Topic topic) throws IOException {
-		this.topic = topic;
+	private JMSUtils(ConnectionFactory connectionFactory, Queue queue, Topic[] topics) throws IOException {
+		this.topics = topics;
 		try {
 			connection = connectionFactory.createConnection();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			msgConsumer = session.createConsumer(queue);
-			msgProducer = session.createProducer(topic);
+			for(int i = 0 ; i<topics.length;i++){
+				msgProducer[i] = session.createProducer(topics[i]);
+			}
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			throw new IOException(e);
@@ -55,9 +58,9 @@ public class JMSUtils {
 	 * @param topicId
 	 * @throws JMSException
 	 */
-	public void send(int topicId, String message) throws JMSException {
+	public void send(int topicId, String message, int consumer) throws JMSException {
 		TextMessage textMessage = session.createTextMessage(message);
-		msgProducer.send(topic, textMessage);
+		msgProducer[consumer-1].send(topics[consumer-1], textMessage);
 	}
 	
 	/**
@@ -83,8 +86,8 @@ public class JMSUtils {
 	}
 
 
-	public static void init(ConnectionFactory connectionFactory, Queue queue, Topic topic) throws IOException {
-		instance = new JMSUtils(connectionFactory, queue, topic);
+	public static void init(ConnectionFactory connectionFactory, Queue queue, Topic[] topics) throws IOException {
+		instance = new JMSUtils(connectionFactory, queue, topics);
 	}
 	private static JMSUtils instance;
 	public static JMSUtils getInstance() throws IOException {

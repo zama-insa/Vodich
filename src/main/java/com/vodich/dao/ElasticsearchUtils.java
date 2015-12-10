@@ -11,6 +11,7 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.node.Node;
@@ -96,7 +97,7 @@ public class ElasticsearchUtils {
 		Scenario scenario = new Scenario();
 		SearchResponse response = esClient.prepareSearch("vodich")
 				.setTypes("scenario")
-				.setQuery(QueryBuilders.termQuery("id", scenarioID))
+				.setQuery(QueryBuilders.matchQuery("id",scenarioID))
 				.execute()
 				.actionGet();
 		try {
