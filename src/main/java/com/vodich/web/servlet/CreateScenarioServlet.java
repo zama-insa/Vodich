@@ -139,8 +139,7 @@ public class CreateScenarioServlet extends HttpServlet {
 			WebUtils.forward(request, response, "create-scenario.jsp");
 			return;
 		}
-		// TODO : forward to the page with list of scenarii
-		WebUtils.forward(request, response, "post-create-scenario.jsp");
+		response.sendRedirect("default");
 	}
 	
 	// Save parameters as request attributes to keep the form parameters

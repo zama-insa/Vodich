@@ -23,10 +23,11 @@ public class ScenarioServiceImpl implements ScenarioService {
 	}
 
 	@Override
-	public void delete(String scenarioId) {
-		// TODO Auto-generated method stub
+	public void delete(String scenarioId) throws DAOException {
+		scenarioDAO.delete(scenarioId);
 
 	}
+	
 	
 	private ScenarioServiceImpl() {
 		scenarioDAO = ScenarioDAOImpl.getInstance();

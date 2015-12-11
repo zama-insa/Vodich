@@ -2,13 +2,18 @@ package com.vodich.dao;
 
 import java.util.List;
 
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vodich.business.CommonService;
 import com.vodich.business.CommonServiceImpl;
 import com.vodich.core.bean.Scenario;
 
 public class ScenarioDAOImpl implements ScenarioDAO {
+	
+	private ScenarioDAO scenarioDAO;
+	private static ObjectMapper mapper = new ObjectMapper();
 
 	@Override
 	public void save(Scenario scenario) throws DAOException {
@@ -21,17 +26,20 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 	}
 
 	@Override
-	public void delete(String scenarioId) {
+	public void delete(String scenarioId) throws DAOException{
+		
+		try {
+		DeleteResponse response = ElasticsearchUtils.deleteScenario(scenarioId);
+		System.out.println(response);
+		} catch (Exception e) {
+			throw new DAOException("[DAO] Save scenario failed", e);
+		}
 		
 	}
 
 	@Override
-	public Scenario load(String scenarioId) throws DAOException {
-		try{
-			return ElasticsearchUtils.load(scenarioId);
-		}catch (Exception e){
-			throw new DAOException("[DAO] Load Scenario Failed", e);
-		}
+	public Scenario load(String scenarioId) {
+		return null;
 	}
 
 	@Override

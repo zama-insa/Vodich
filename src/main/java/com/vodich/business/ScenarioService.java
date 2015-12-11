@@ -11,7 +11,7 @@ public interface ScenarioService {
 	
 	public void launch(String scenarioId);
 	
-	public void delete(String scenarioId);
+	public void delete(String scenarioId) throws DAOException;
 	
 	public List<Scenario> loadAll();
 	

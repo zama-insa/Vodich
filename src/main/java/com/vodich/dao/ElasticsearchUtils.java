@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -65,6 +66,19 @@ public class ElasticsearchUtils {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static DeleteResponse deleteScenario(String scenarioId){
+		
+		SearchResponse response = esClient.prepareSearch("vodich")
+				 .setTypes("scenario")
+				 .setQuery(QueryBuilders.termQuery("id", scenarioId))
+				.execute()
+				.actionGet();
+		System.out.println(response.getHits().getAt(0).getSourceAsString());
+			
+		return esClient.prepareDelete("vodich", "scenario", response.getHits().getAt(0).id()).execute().actionGet();
+
 	}
 	
 	public static List<Scenario> loadScenarii(){
