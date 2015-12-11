@@ -24,6 +24,7 @@ public class JMSTopicSendServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		try {
+			
 			jmsUtils = JMSUtils.getInstance();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -44,9 +45,9 @@ public class JMSTopicSendServlet extends HttpServlet {
 		response.getWriter().append("Sending to topic : " + topic);
 		try {
 			jmsUtils.startConnection();
-			jmsUtils.send(topic, "To " + topic + ": this is Vodich. Over");
+			//jmsUtils.send(topic, "To " + topic + ": this is Vodich. Over");
 			jmsUtils.stopConnection();
-			response.getWriter().append("<br/>Message sent.");
+			response.getWriter().append("<br>Message sent.");
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
