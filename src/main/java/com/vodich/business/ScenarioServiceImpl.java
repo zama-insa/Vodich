@@ -29,6 +29,9 @@ public class ScenarioServiceImpl implements ScenarioService {
 	public void launch(String scenarioId) throws DAOException, JMSException {
 		// TODO Auto-generated method stub
 		Scenario scenario = scenarioDAO.load(scenarioId);
+		if (scenario == null) {
+			throw new DAOException("Scenario with id " + scenarioId + " not found");
+		}
 		try {
 			JMSUtils jmsUtils = JMSUtils.getInstance();
 			for(Flow flow : scenario.getFlows()){
