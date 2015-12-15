@@ -12,7 +12,6 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.node.Node;
@@ -73,7 +72,7 @@ public class ElasticsearchUtils {
 		
 		SearchResponse response = esClient.prepareSearch("vodich")
 				 .setTypes("scenario")
-				 .setQuery(QueryBuilders.termQuery("id", scenarioId))
+				 .setQuery(QueryBuilders.matchQuery("id", scenarioId))
 				.execute()
 				.actionGet();
 		System.out.println(response.getHits().getAt(0).getSourceAsString());
@@ -107,8 +106,8 @@ public class ElasticsearchUtils {
 		 return listScenarii;
 	}
 	
-	public static Scenario load(String scenarioID){
-		Scenario scenario = new Scenario();
+	public static Scenario load(String scenarioID) {
+		Scenario scenario;
 		SearchResponse response = esClient.prepareSearch("vodich")
 				.setTypes("scenario")
 				.setQuery(QueryBuilders.matchQuery("id",scenarioID))
@@ -121,6 +120,7 @@ public class ElasticsearchUtils {
 			e.printStackTrace();
 			return null;
 		}
+
 		return scenario;
 
 	}

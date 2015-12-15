@@ -39,7 +39,7 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 
 	@Override
 	public Scenario load(String scenarioId) {
-		return null;
+		return ElasticsearchUtils.load(scenarioId);
 	}
 
 	@Override
