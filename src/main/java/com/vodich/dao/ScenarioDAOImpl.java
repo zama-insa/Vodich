@@ -41,6 +41,10 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 	public Scenario load(String scenarioId) {
 		return ElasticsearchUtils.load(scenarioId);
 	}
+	
+	public Scenario loadByName(String scenarioName) throws DAOException {
+		return ElasticsearchUtils.loadByName(scenarioName);
+	}
 
 	@Override
 	public List<Scenario> loadAll() {

@@ -70,14 +70,16 @@ public class ScenarioServiceImpl implements ScenarioService {
 
 	@Override
 	public List<Scenario> loadAll() {
-		// TODO Auto-generated method stub
 		return scenarioDAO.loadAll();
 	}
 
 	@Override
 	public Scenario load(String scenarioID) throws DAOException {
-		// TODO Auto-generated method stub
 		return scenarioDAO.load(scenarioID);
+	}
+	
+	public Scenario loadByName(String scenarioName) throws DAOException {
+		return scenarioDAO.loadByName(scenarioName);
 	}
 	
 	

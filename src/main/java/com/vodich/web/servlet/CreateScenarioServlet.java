@@ -112,6 +112,19 @@ public class CreateScenarioServlet extends HttpServlet {
 			WebUtils.forward(request, response, "create-scenario.jsp");
 			return;
 		}
+		
+		try {
+			if (scenarioService.loadByName(scenarioName) != null) {
+				request.setAttribute(ATT_ERROR_MSG, "Scenario name '" + scenarioName + "' already exists");
+				WebUtils.forward(request, response, "create-scenario.jsp");
+				return;
+			}
+		} catch (DAOException e) {
+			request.setAttribute(ATT_ERROR_MSG, "Database error : Check existing scenario failed");
+			WebUtils.forward(request, response, "create-scenario.jsp");
+			e.printStackTrace();
+			return;
+		}
 		List<Flow> flows = new ArrayList<>();
 		for (int i = 1; i <= flowCount; i++) {
 			Flow flow = new Flow();
@@ -130,7 +143,7 @@ public class CreateScenarioServlet extends HttpServlet {
 			flows.add(flow);
 		}
 		Scenario scenario = new Scenario();
-		scenario.setId(scenarioName);
+		scenario.setName(scenarioName);
 		scenario.setFlows(flows);
 		try {
 			scenarioService.save(scenario);

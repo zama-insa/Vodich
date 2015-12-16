@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Scenario {
 	private String id;
+	private String name;
 	private Date createdAt;
 	private List<Flow> flows;
 	
@@ -25,5 +26,11 @@ public class Scenario {
 	}
 	public void setFlows(List<Flow> flows) {
 		this.flows = flows;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }

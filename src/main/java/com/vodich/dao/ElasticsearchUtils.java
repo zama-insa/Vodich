@@ -9,6 +9,7 @@ import java.util.Properties;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -98,6 +99,7 @@ public class ElasticsearchUtils {
 			Scenario scenario;
 			try {
 				scenario = mapper.readValue(hit.getSourceAsString(), Scenario.class);
+				scenario.setId(hit.getId());
 				listScenarii.add(scenario);
 
 			} catch (IOException e) {
@@ -110,15 +112,33 @@ public class ElasticsearchUtils {
 	
 	public static Scenario load(String scenarioID) {
 		Scenario scenario;
-		SearchResponse response = esClient.prepareSearch("vodich")
-				.setTypes("scenario")
-				.setQuery(QueryBuilders.matchQuery("id",scenarioID))
+		GetResponse response = esClient.prepareGet("vodich", "scenario", scenarioID)
 				.execute()
 				.actionGet();
 		try {
-			scenario = mapper.readValue(response.getHits().getAt(0).getSourceAsString(), Scenario.class);
+			scenario = mapper.readValue(response.getSourceAsBytes(), Scenario.class);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+		return scenario;
+
+	}
+	public static Scenario loadByName(String scenarioName) throws DAOException {
+		Scenario scenario;
+		SearchResponse response = esClient.prepareSearch("vodich")
+				.setTypes("scenario")
+				.setQuery(QueryBuilders.matchQuery("name",scenarioName))
+				.execute()
+				.actionGet();
+		try {
+			if (response.getHits().getTotalHits() < 1) return null;
+			if (response.getHits().getTotalHits() > 1) throw new DAOException("Multiple return values");
+			scenario = mapper.readValue(response.getHits().getAt(0).getSourceAsString(), Scenario.class);
+			scenario.setId(response.getHits().getAt(0).getId());
+		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}

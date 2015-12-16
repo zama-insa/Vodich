@@ -17,5 +17,7 @@ public interface ScenarioService {
 	
 	public List<Scenario> loadAll();
 	
-	public Scenario load (String scenarioID) throws DAOException;
+	public Scenario load(String scenarioID) throws DAOException;
+	
+	public Scenario loadByName(String scenarioName) throws DAOException;
 }
