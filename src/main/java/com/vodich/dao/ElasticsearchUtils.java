@@ -5,6 +5,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -26,13 +27,15 @@ public class ElasticsearchUtils {
 	
 	private static Client esClient;
 	private static ObjectMapper mapper;
+	private static Properties properties;
 	public static void init() {
+		System.out.println("Elasticsearch data folder: " + getProperties().getProperty("dataPath"));
 		Settings.Builder settings = Settings.builder();
-        Path dataPath = FileSystems.getDefault().getPath("data");
-        settings.put("cluster.name", "index");
-        settings.put("http.port", 9200);
-        settings.put("network.host","localhost");
-        settings.put("transport.tcp.port", 9300);
+        Path dataPath = FileSystems.getDefault().getPath(getProperties().getProperty("dataPath"));
+        settings.put("cluster.name", getProperties().getProperty("cluster.name"));
+        settings.put("http.port", getProperties().getProperty("http.port"));
+        settings.put("network.host", getProperties().getProperty("network.host"));
+        settings.put("transport.tcp.port", getProperties().getProperty("transport.tcp.port"));
         settings.put("path.home", dataPath.toFile().getAbsolutePath());
         settings.put("path.data", dataPath.toFile().getAbsolutePath());
         settings.build();
@@ -78,7 +81,6 @@ public class ElasticsearchUtils {
 		System.out.println(response.getHits().getAt(0).getSourceAsString());
 			
 		return esClient.prepareDelete("vodich", "scenario", response.getHits().getAt(0).id()).execute().actionGet();
-
 	}
 	
 	public static List<Scenario> loadScenarii(){
@@ -123,6 +125,19 @@ public class ElasticsearchUtils {
 
 		return scenario;
 
+	}
+
+	public static Properties getProperties() {
+		if (properties == null) {
+			properties = new Properties();
+			try {
+				properties.load(ElasticsearchUtils.class.getClassLoader().getResourceAsStream("elasticsearch.properties"));
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		return properties;
 	}
 	
 
