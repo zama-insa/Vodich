@@ -7,12 +7,14 @@
 <%@attribute name="footer" fragment="true" %>
 <html>
   <body>
+  	<div class="page-wrap">
     <div id="header">
       <jsp:invoke fragment="header"/>
     </div>
 
     <div id="body">
       <jsp:invoke fragment="body"/>
+    </div>
     </div>
     <div id="footer">
       <jsp:invoke fragment="footer"/>
