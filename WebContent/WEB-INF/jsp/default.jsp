@@ -8,6 +8,16 @@
 </div>
 <br>
   <div class="row">
+	<div class="col-md-10">
+		<c:if test="${not empty error}">
+			<div class="alert alert-danger alert-dismissible" role="alert">
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  <strong>Error</strong><br/> ${error}
+			</div>
+		</c:if>
+	</div>
+	</div>
+  <div class="row">
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
   <c:forEach items="${scenarii }" var="scenario">

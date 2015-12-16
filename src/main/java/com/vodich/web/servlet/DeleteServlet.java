@@ -47,12 +47,16 @@ public class DeleteServlet extends HttpServlet {
 			scenarioService.delete(scenarioID);
 			
 		} catch (DAOException e) {
-			request.setAttribute(ATT_ERROR_MSG, "Database error : Load scenario failed");
-			WebUtils.forward(request, response, "delete.jsp");
-			
+			request.setAttribute(ATT_ERROR_MSG, "Database error : Delete scenario failed (id " + scenarioID + ")");
+			WebUtils.forward(request, response, "default.jsp");
+			return;
+		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		response.sendRedirect("default");
-		//WebUtils.forward(request, response, "default.jsp"); 
 	}
 
 	/**

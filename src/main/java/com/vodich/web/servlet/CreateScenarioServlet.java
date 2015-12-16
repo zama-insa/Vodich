@@ -139,6 +139,11 @@ public class CreateScenarioServlet extends HttpServlet {
 			WebUtils.forward(request, response, "create-scenario.jsp");
 			return;
 		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		response.sendRedirect("default");
 	}
 	

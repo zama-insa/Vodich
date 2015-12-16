@@ -43,7 +43,7 @@ public class DefaultPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		request.setAttribute("scenarii",scenarioService.loadAll());
+		request.getSession().setAttribute("scenarii",scenarioService.loadAll());
 		WebUtils.forward(request, response, "default.jsp");
 		//response.getWriter().append("Served at: "+a).append(request.getContextPath());
 	}
