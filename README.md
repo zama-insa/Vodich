@@ -1,6 +1,8 @@
 ## Vodich App
 
-A software tool to measure the performance 
+ESB Qualification Scenario Launcher
+
+[![Build Status](http://46.101.239.86:8080/job/Vodich/badge/icon)](http://46.101.239.86:8080/job/Vodich/)
 
 ## Configure the whole thing
 
