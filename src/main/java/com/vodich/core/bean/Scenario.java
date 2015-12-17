@@ -33,4 +33,16 @@ public class Scenario {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public boolean equals(Scenario scenario1, Scenario scenario2){
+		if (scenario1.id.compareTo(scenario2.id) ==0){
+			if ( (scenario1.createdAt).compareTo(scenario2.createdAt) == 0){
+				if ((scenario1.flows).equals(scenario2.flows)){
+					return true;
+				}
+				}
+		}
+		return false;
+	}
+
 }
