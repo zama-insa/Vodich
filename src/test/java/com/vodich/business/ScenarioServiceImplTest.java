@@ -3,6 +3,8 @@ package com.vodich.business;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+
 import javax.jms.JMSException;
 
 import org.junit.Before;
@@ -11,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.vodich.core.bean.Flow;
 import com.vodich.core.bean.Scenario;
 import com.vodich.core.util.JMSUtils;
 import com.vodich.dao.DAOException;
@@ -45,7 +48,9 @@ public class ScenarioServiceImplTest {
 	
 	@Test
 	public void testLaunchExistingScenario() throws DAOException, JMSException {
-		when(scenarioDAOMock.load("42")).thenReturn(new Scenario());
+		Scenario s = new Scenario();
+		s.setFlows(new ArrayList<Flow>());
+		when(scenarioDAOMock.load("42")).thenReturn(s);
 		scenarioServiceImpl.launch("42");
 	}
 }

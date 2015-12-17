@@ -5,6 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <build>
+  	<finalName>Vodich-WEBAPP</finalName>
     <sourceDirectory>src/main/java</sourceDirectory>
     <plugins>
       <plugin>
@@ -35,6 +36,7 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
             <groupId>org.elasticsearch</groupId>
@@ -73,6 +75,10 @@
 			<artifactId>mockito-all</artifactId>
 			<version>1.10.19</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>8.0.29</version>
+		</dependency>
   </dependencies>
 </project>
