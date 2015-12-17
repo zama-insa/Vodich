@@ -83,8 +83,6 @@ public class ScenarioServiceImpl implements ScenarioService {
 	public Scenario loadByName(String scenarioName) throws DAOException {
 		return scenarioDAO.loadByName(scenarioName);
 	}
-	
-	
-	
+
 
 }

@@ -79,11 +79,14 @@ public class ElasticsearchUtils {
 				 .setQuery(QueryBuilders.matchQuery("id", scenarioId))
 				.execute()
 				.actionGet();
-		System.out.println(response.getHits().getAt(0).getSourceAsString());
-			
+
+		if (response.getHits().totalHits() ==0){
+			return null;
+		}
+		else{
 		return esClient.prepareDelete("vodich", "scenario", response.getHits().getAt(0).id()).execute().actionGet();
+		}
 	}
-	
 	public static List<Scenario> loadScenarii(){
 		
 		List<Scenario> listScenarii = new ArrayList<Scenario>();
