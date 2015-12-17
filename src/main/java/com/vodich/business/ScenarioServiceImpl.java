@@ -18,6 +18,7 @@ import com.vodich.dao.ScenarioDAOImpl;
 public class ScenarioServiceImpl implements ScenarioService {
 	
 	private ScenarioDAO scenarioDAO;
+	private JMSUtils jmsUtils;
 	private static ObjectMapper mapper = new ObjectMapper();
 
 	@Override
@@ -27,27 +28,22 @@ public class ScenarioServiceImpl implements ScenarioService {
 
 	@Override
 	public void launch(String scenarioId) throws DAOException, JMSException {
-		// TODO Auto-generated method stub
 		Scenario scenario = scenarioDAO.load(scenarioId);
 		if (scenario == null) {
 			throw new DAOException("Scenario with id " + scenarioId + " not found");
 		}
 		try {
-			JMSUtils jmsUtils = JMSUtils.getInstance();
 			for(Flow flow : scenario.getFlows()){
-				
-				
 				String json = mapper.writeValueAsString(flow);
 				jmsUtils.startConnection();
 				jmsUtils.send(1, json, Integer.parseInt(flow.getConsumer()));
 			
 			}
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		} finally {
+			jmsUtils.stopConnection();
 		}
-
-
 	}
 
 	@Override
@@ -56,14 +52,20 @@ public class ScenarioServiceImpl implements ScenarioService {
 
 	}
 	
-	
-	private ScenarioServiceImpl() {
-		scenarioDAO = ScenarioDAOImpl.getInstance();
+	ScenarioServiceImpl(ScenarioDAO scenarioDAO, JMSUtils jmsUtils) {
+		this.scenarioDAO = scenarioDAO;
+		this.jmsUtils = jmsUtils;
 	}
+	
 	private static ScenarioServiceImpl instance;
 	public static ScenarioService getInstance() {
 		if (instance == null) {
-			instance = new ScenarioServiceImpl();
+			try {
+				instance = new ScenarioServiceImpl(ScenarioDAOImpl.getInstance(), JMSUtils.getInstance());
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
 		return instance;
 	}
