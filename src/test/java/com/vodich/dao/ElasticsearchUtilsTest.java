@@ -25,6 +25,7 @@ public class ElasticsearchUtilsTest {
 		ElasticsearchUtils.init();
 	}
 	
+	
 	@Test
 	public void saveScenarioTest() {
 		assertNotNull(ElasticsearchUtils.saveScenario(new Scenario()));
@@ -49,25 +50,25 @@ public class ElasticsearchUtilsTest {
 	}
 	
 	@Test
-	public void loadScenarioTestFound() {
+	public void loadScenarioTestFound() throws DAOException {
 		Scenario scenario = new Scenario();
 		scenario.setId("42");		
 		ElasticsearchUtils.saveScenario(scenario); 
 		try {
 		    Thread.sleep(1000);  // we have to wait 1 sec, time needed for the scenario to be indexed and searchable 
-		    assert(scenario.equals(ElasticsearchUtils.load("42")));
+		    assert(scenario.equals(ElasticsearchUtils.loadByName("42")));
 		} catch(InterruptedException ex){
 		    Thread.currentThread().interrupt();
 		}
 	}
 	
 	@Test
-	public void loadScenarioTestNotFound() {
+	public void loadScenarioTestNotFound() throws DAOException {
 		 // we have to wait 1 sec, time needed for the scenario to be indexed and searchable 
-		    assertNull(ElasticsearchUtils.load("46"));
+		    assertNull(ElasticsearchUtils.loadByName("46"));
 	}
 	
-	
+
 	
 	@AfterClass
 	public static void close() {

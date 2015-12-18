@@ -119,6 +119,7 @@ public class ElasticsearchUtils {
 				.execute()
 				.actionGet();
 		try {
+			
 			scenario = mapper.readValue(response.getSourceAsBytes(), Scenario.class);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
