@@ -30,10 +30,10 @@
       </h4>
 	</div>
 	<div class="col-xs-6 col-sm-3">
-	<button class="btn btn-primary" type="button" onclick="location.href='launch?id=<c:out value="${scenario.id}"/>">Launch</button>
+	<button class="btn btn-primary" type="button" onclick="location.href='launch?id=<c:out value="${scenario.id}'"/>">Launch</button>
 	</div>
 	<div class="col-xs-6 col-sm-3">
-	<button class="btn btn-primary" type="button" onclick="location.href='delete?id=<c:out value="${scenario.id}"/>">Delete</button>
+	<button class="btn btn-primary" type="button" onclick="location.href='delete?id=<c:out value="${scenario.id}'"/>">Delete</button>
 	</div>
     </div>
     </div>
