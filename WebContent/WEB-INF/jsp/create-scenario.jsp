@@ -14,21 +14,12 @@
             <fmt:message key="login.label.yolo"/></p>
             <select id="language" name="language" onchange="submit()">
                 <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-                <option value="nl" ${language == 'nl' ? 'selected' : ''}>Nederlands</option>
-                <option value="es" ${language == 'es' ? 'selected' : ''}>Español</option>
+                <option value="fr" ${language == 'fr' ? 'selected' : ''}>Français</option>
             </select>
-        </form>
-        <form method="post">
-            <label for="yolo"><fmt:message key="login.label.yolo" />:</label>
-            <input type="text" id="yolo" name="yolo">
-            <br>
-            <label for="password"><fmt:message key="login.label.password" />:</label>
-            <input type="password" id="password" name="password">
-            <br>
         </form>
     </body>
 </html>
-<%-- 
+
 <t:baseLayout>
 	<style>
 		h2 a:hover {
@@ -64,7 +55,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-			<h2><a href="create">Create a scenario</a></h2>
+			<h2><a href="create"><fmt:message key="message_creation" /></a></h2>
 			</div>
 		</div>
 		<div class="row">
@@ -72,7 +63,7 @@
 			<c:if test="${not empty error}">
 				<div class="alert alert-danger alert-dismissible" role="alert">
 				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  <strong>Error</strong><br/> ${error}
+				  <strong><fmt:message key="message_error"/></strong><br/> ${error}
 				</div>
 			</c:if>
 		</div>
@@ -83,8 +74,8 @@
 		<div class="row">
 		<div class="col-md-6 col-md-offset-4">
 			<div class="form-group">
-				<label for="name">Name</label>
-				<input id="name" name="name" class="form-control" placeholder="Name of your scenario" value="${name}"/>
+				<label for="name"><fmt:message key="message_name" /></label>
+				<input id="name" name="name" class="form-control" placeholder=<fmt:message key="message_nameofsc" /> value="${name}"/>
 			</div>
 		</div>
 		</div>
@@ -110,7 +101,7 @@
 					<div class="flow">
 						<h4>Flow ${i}</h4>
 						<div class="form-group">
-						  <label for="consumer${i}">Consumer</label>
+						  <label for="consumer${i}"><fmt:message key="message_consumer" /></label>
 						  <select class="form-control" id="consumer${i}" name="consumer${i}">
 						  	<c:forEach begin="1" end="${CONSUMER_NUM}" var="j">
 							    <option ${j eq map.consumer[i-1] ? 'selected': ''}>${j}</option>
@@ -118,7 +109,7 @@
 						  </select>
 					  	</div>
 					  	<div class="form-group">
-						  <label for="producer${i}">Producer</label>
+						  <label for="producer${i}"><fmt:message key="message_producer" /></label>
 						  <select class="form-control" id="producer${i}" name="producer${i}">
 						  	<c:forEach begin="1" end="${PRODUCER_NUM}" var="j">
 							    <option ${j eq map.producer[i-1] ? 'selected': ''}>${j}</option>
@@ -126,23 +117,23 @@
 						  </select>
 					  	</div>
 					  	<div class="form-group">
-						  <label for="processtime${i}">Process time</label>
-						  <input class="form-control" id="processtime${i}" name="processtime${i}" placeholder="Producer Processing Time" value="${map.processtime[i-1]}"/>
+						  <label for="processtime${i}"><fmt:message key="message_processtime" /></label>
+						  <input class="form-control" id="processtime${i}" name="processtime${i}" placeholder=<fmt:message key="message_producerprocessingtime" /> value="${map.processtime[i-1]}"/>
 					  	</div>
 					  	<div class="form-group">
-						  <label for="frequency${i}">Frequency</label>
-						  <input class="form-control" id="frequency${i}" name="frequency${i}" placeholder="Sending frequency of consumer" value="${map.frequency[i-1]}"/>
+						  <label for="frequency${i}"><fmt:message key="message_frequency" /></label>
+						  <input class="form-control" id="frequency${i}" name="frequency${i}" placeholder= <fmt:message key="message_sendingfrequencyofconsumer" /> value="${map.frequency[i-1]}"/>
 					  	</div>
 					  	<div class="form-group">
-						  <label for="starttime${i}">Start at</label>
-						  <input class="form-control" id="starttime${i}" name="starttime${i}" placeholder="Relative time when the consumer should start" value="${map.starttime[i-1]}"/>
+						  <label for="starttime${i}"><fmt:message key="message_startsat" /></label>
+						  <input class="form-control" id="starttime${i}" name="starttime${i}" placeholder=<fmt:message key="message_relativetimestart" /> value="${map.starttime[i-1]}"/>
 					  	</div>
 					  	<div class="form-group">
-						  <label for="stoptime${i}">Finishing at</label>
-						  <input class="form-control" id="stoptime${i}" name="stoptime${i}" placeholder="Relative time when the consumer should stop" value="${map.stoptime[i-1]}"/>
+						  <label for="stoptime${i}"><fmt:message key="message_endsat" /></label>
+						  <input class="form-control" id="stoptime${i}" name="stoptime${i}" placeholder=<fmt:message key="message_relativetimestop" /> value="${map.stoptime[i-1]}"/>
 					  	</div>
 					</div>
-					<button class="btn btn-primary" type=submit>Create</button>
+					<button class="btn btn-primary" type=submit><fmt:message key="message_create" /></button>
 					<input type="hidden" id="flowcount" name="flowcount" value="${flowcount}"/>
 					<input type="hidden" id="action" name="action" value=""/>
 				</div>
@@ -155,4 +146,3 @@
 		</div>
 		</div>
 </t:baseLayout>
---%>
