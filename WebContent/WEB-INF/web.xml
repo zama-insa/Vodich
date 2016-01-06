@@ -16,4 +16,12 @@
   <message-destination>
       <message-destination-name>MyQueue</message-destination-name>
   </message-destination>
+  
+  
+  <context-param>
+  <param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
+  <param-value>de</param-value>
+</context-param>
+
+  
 </web-app>
