@@ -10,9 +10,9 @@ public class ResultDAOImpl implements ResultDAO {
 	}
 
 	@Override
-	public ResultDAO load(String resultId) {
+	public Result load(String resultId) {
 		// TODO Auto-generated method stub
-		return null;
+		return ElasticsearchUtils.loadScenarioResult(resultId);
 	}
 
 	private ResultDAOImpl() {}

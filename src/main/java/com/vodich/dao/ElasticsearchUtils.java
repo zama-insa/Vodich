@@ -152,6 +152,23 @@ public class ElasticsearchUtils {
 
 	}
 	
+	public static Result loadScenarioResult(String resultId) {
+		Result result;
+		GetResponse response = esClient.prepareGet("vodich", "result", resultId)
+				.execute()
+				.actionGet();
+		try {
+			
+			result = mapper.readValue(response.getSourceAsBytes(), Result.class);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+		return result;
+	}
+	
 
 	public static IndexResponse saveScenarioResult(Result result) {
 		try {

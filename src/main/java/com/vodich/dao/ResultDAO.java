@@ -6,5 +6,5 @@ public interface ResultDAO {
 
 	public void save(Result result);
 	
-	public ResultDAO load(String resultId);
+	public Result load(String resultId);
 }
