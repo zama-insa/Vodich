@@ -22,6 +22,7 @@ import org.elasticsearch.search.SearchHit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vodich.core.bean.Result;
 import com.vodich.core.bean.Scenario;
 
 public class ElasticsearchUtils {
@@ -150,6 +151,18 @@ public class ElasticsearchUtils {
 		return scenario;
 
 	}
+	
+
+	public static IndexResponse saveScenarioResult(Result result) {
+		try {
+			byte[] json = mapper.writeValueAsBytes(result);
+			return esClient.prepareIndex("vodich", "result").setSource(json).get();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 
 	public static Properties getProperties() {
 		if (properties == null) {
@@ -163,7 +176,7 @@ public class ElasticsearchUtils {
 		}
 		return properties;
 	}
-	
+
 
 	
 }
