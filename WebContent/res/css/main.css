@@ -1,6 +1,9 @@
 * {
 	margin: 0;
 }
+iframe {
+	border: none;
+}
 html, body {
   height: 100%;
 }

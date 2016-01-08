@@ -5,10 +5,24 @@
 		<h2><a href="result">Scenario result</a></h2>
 		</div>
 	</div>
+	<c:choose>
+	<c:when test="${not empty error}">
 	<div class="row">
-		<div class="col-md-12">
-			<iframe src="http://localhost:5601/app/kibana#/visualize/edit/Linechart-Response-Time?embed&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-15m,mode:quick,to:now))&_a=(filters:!(),linked:!f,query:(query_string:(analyze_wildcard:!t,query:'*')),vis:(aggs:!((id:'1',params:(field:result.messageResults.time),schema:metric,type:avg),(id:'2',params:(field:result.messageResults.id,order:asc,orderBy:_term,size:100000),schema:segment,type:terms)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,defaultYExtents:!f,drawLinesBetweenPoints:!t,interpolate:linear,radiusRatio:9,scale:linear,setYExtents:!f,shareYAxis:!t,showCircles:!t,smoothLines:!f,spyPerPage:10,times:!(),yAxis:()),type:line))" height="600" width="1000"></iframe>
-		</div>
+			<div class="col-md-10">
+					<div class="alert alert-danger alert-dismissible" role="alert">
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  <strong>Error</strong><br/> ${error}
+					</div>
+			</div>
+	</div>
+	</c:when>
+	<c:otherwise>
+	<div class="row">
+		<div class="col-md-12" id="linechart"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-3" id="totalcount"></div>
+		<div class="col-md-3" id="datalost"></div>	
 	</div>
 	<br/>
 	<div class="row">
@@ -16,5 +30,14 @@
 			<p><a href="default"><i class="fa fa-arrow-left"></i> Default page</a>
 		</div>
 	</div>
+	<script src="res/js/kibana-utils.js"></script>
+	<script>
+	var kibana = new KibanaUtils();
+	$("#linechart").html(kibana.lineChartIframe('${rid}',800,200));
+	$("#totalcount").html(kibana.totalCountIframe('${rid}'));
+	$("#datalost").html(kibana.dataLostIframe('${rid}'));
+	</script>
+	</c:otherwise>
+	</c:choose>
 </div>
 </t:baseLayout>

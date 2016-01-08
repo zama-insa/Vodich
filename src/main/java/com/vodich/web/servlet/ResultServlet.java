@@ -23,6 +23,7 @@ public class ResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String PARAM_RESULT_ID = "rid";
 	private static final String ATT_ERROR_MSG = "error";
+	private static final String ATT_RESULT_ID = PARAM_RESULT_ID;
 	private ResultService resultService;
        
    @Override
@@ -35,19 +36,19 @@ public class ResultServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String resultId = request.getParameter(PARAM_RESULT_ID);
 		if (VodichUtils.isNullOrEmpty(resultId)) {
-			request.setAttribute("error", "Missing required parameter : 'rid'");
+			request.setAttribute(ATT_ERROR_MSG, "Missing required parameter : 'rid'");
 			WebUtils.forward(request, response, "result.jsp");
 			return;
 		} 
 		
 		Result result = resultService.load(resultId);
 		if (result == null) {
-			request.setAttribute("error", "No result corresponding to id '" + resultId + "'");
+			request.setAttribute(ATT_ERROR_MSG, "No result corresponding to id '" + resultId + "'");
 			WebUtils.forward(request, response, "result.jsp");
 			return;
 		}
 		
-		
+		request.setAttribute(ATT_RESULT_ID, resultId);
 		WebUtils.forward(request, response, "result.jsp");
 	}
 

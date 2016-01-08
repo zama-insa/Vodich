@@ -34,6 +34,7 @@ public class ScenarioServiceImpl implements ScenarioService {
 		scenarioDAO.save(scenario);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void launch(String scenarioId) throws DAOException, JMSException {
 		Scenario scenario = scenarioDAO.load(scenarioId);
@@ -64,25 +65,9 @@ public class ScenarioServiceImpl implements ScenarioService {
 		Result result = new Result();
 		result.setFinishTime(new Date());
 		result.setScenarioId(scenarioId);
-		result.setResult(resultJson);
+		result.setResult((List<Object>) resultJson.get("messageResults"));
 		resultDAO.save(result);
 		jmsUtils.stopConnection();
-	}
-	
-	public static void main(String[] args) {
-		String resultString = "{\"messageResults\":[{\"time\":669,\"id\":0}],\"consumer\":1}";
-		Map<String, Object> resultJson;
-		try {
-			resultJson = mapper.readValue(resultString, new TypeReference<Map<String, Object>>() {});
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
-		Result result = new Result();
-		result.setFinishTime(new Date());
-		result.setResult(resultJson);
-		ResultDAO resultDAO = ResultDAOImpl.getInstance();
-		resultDAO.save(result);
 	}
 
 	@Override

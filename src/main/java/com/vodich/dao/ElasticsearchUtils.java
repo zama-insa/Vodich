@@ -5,15 +5,22 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
+import org.apache.activemq.protobuf.compiler.parser.ProtoParserTokenManager;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.node.Node;
@@ -26,43 +33,43 @@ import com.vodich.core.bean.Result;
 import com.vodich.core.bean.Scenario;
 
 public class ElasticsearchUtils {
-	
+
 	private static Client esClient;
 	private static ObjectMapper mapper;
 	private static Properties properties;
 	public static void init() {
 		System.out.println("Elasticsearch data folder: " + getProperties().getProperty("dataPath"));
 		Settings.Builder settings = Settings.builder();
-        Path dataPath = FileSystems.getDefault().getPath(getProperties().getProperty("dataPath"));
-        settings.put("cluster.name", getProperties().getProperty("cluster.name"));
-        settings.put("http.port", getProperties().getProperty("http.port"));
-        settings.put("network.host", getProperties().getProperty("network.host"));
-        settings.put("transport.tcp.port", getProperties().getProperty("transport.tcp.port"));
-        settings.put("path.home", dataPath.toFile().getAbsolutePath());
-        settings.put("path.data", dataPath.toFile().getAbsolutePath());
-        settings.build();
-        Node esNode = NodeBuilder.nodeBuilder().settings(settings).node();
-        esClient = esNode.client();
-        mapper = new ObjectMapper();
-        // Create index
-        try {
-        	esClient.admin().indices().prepareCreate("vodich").execute().actionGet();
-        } catch (IndexAlreadyExistsException e) {
-        	//never mind if index already exists
-        }
-        
-        //Wait for healty status of shards
-        ClusterHealthResponse health;
-        do {
-            System.out.println("Waiting for elasticsearch yellow status");
-            health = esClient.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
-        } while (health.isTimedOut());
+		Path dataPath = FileSystems.getDefault().getPath(getProperties().getProperty("dataPath"));
+		settings.put("cluster.name", getProperties().getProperty("cluster.name"));
+		settings.put("http.port", getProperties().getProperty("http.port"));
+		settings.put("network.host", getProperties().getProperty("network.host"));
+		settings.put("transport.tcp.port", getProperties().getProperty("transport.tcp.port"));
+		settings.put("path.home", dataPath.toFile().getAbsolutePath());
+		settings.put("path.data", dataPath.toFile().getAbsolutePath());
+		settings.build();
+		Node esNode = NodeBuilder.nodeBuilder().settings(settings).node();
+		esClient = esNode.client();
+		mapper = new ObjectMapper();
+		// Create index
+		try {
+			esClient.admin().indices().prepareCreate("vodich").execute().actionGet();
+		} catch (IndexAlreadyExistsException e) {
+			//never mind if index already exists
+		}
+
+		//Wait for healty status of shards
+		ClusterHealthResponse health;
+		do {
+			System.out.println("Waiting for elasticsearch yellow status");
+			health = esClient.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+		} while (health.isTimedOut());
 	}
-	
+
 	public static void close() {
 		esClient.close();
 	}
-	
+
 	public static IndexResponse saveScenario(Scenario scenario) {
 		try {
 			byte[] json = mapper.writeValueAsBytes(scenario);
@@ -72,12 +79,12 @@ public class ElasticsearchUtils {
 			return null;
 		}
 	}
-	
+
 	public static DeleteResponse deleteScenario(String scenarioId){
-		
+
 		SearchResponse response = esClient.prepareSearch("vodich")
-				 .setTypes("scenario")
-				 .setQuery(QueryBuilders.matchQuery("id", scenarioId))
+				.setTypes("scenario")
+				.setQuery(QueryBuilders.matchQuery("id", scenarioId))
 				.execute()
 				.actionGet();
 
@@ -85,21 +92,21 @@ public class ElasticsearchUtils {
 			return null;
 		}
 		else{
-		return esClient.prepareDelete("vodich", "scenario", response.getHits().getAt(0).id()).execute().actionGet();
+			return esClient.prepareDelete("vodich", "scenario", response.getHits().getAt(0).id()).execute().actionGet();
 		}
 	}
 	public static List<Scenario> loadScenarii(){
-		
+
 		List<Scenario> listScenarii = new ArrayList<Scenario>();
-		
+
 		//Query to search in ES
 		SearchResponse response = esClient.prepareSearch("vodich")
-				 .setTypes("scenario")
-				 .execute()
-				 .actionGet();
-		
+				.setTypes("scenario")
+				.execute()
+				.actionGet();
+
 		//Serialize to Scenario
-		 for(SearchHit hit : response.getHits()){
+		for(SearchHit hit : response.getHits()){
 			Scenario scenario;
 			try {
 				scenario = mapper.readValue(hit.getSourceAsString(), Scenario.class);
@@ -110,17 +117,17 @@ public class ElasticsearchUtils {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		 }
-		 return listScenarii;
+		}
+		return listScenarii;
 	}
-	
+
 	public static Scenario load(String scenarioID) {
 		Scenario scenario;
 		GetResponse response = esClient.prepareGet("vodich", "scenario", scenarioID)
 				.execute()
 				.actionGet();
 		try {
-			
+
 			scenario = mapper.readValue(response.getSourceAsBytes(), Scenario.class);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -151,14 +158,14 @@ public class ElasticsearchUtils {
 		return scenario;
 
 	}
-	
+
 	public static Result loadScenarioResult(String resultId) {
 		Result result;
 		GetResponse response = esClient.prepareGet("vodich", "result", resultId)
 				.execute()
 				.actionGet();
 		try {
-			
+
 			result = mapper.readValue(response.getSourceAsBytes(), Result.class);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -168,18 +175,49 @@ public class ElasticsearchUtils {
 
 		return result;
 	}
-	
+
 
 	public static IndexResponse saveScenarioResult(Result result) {
 		try {
-			byte[] json = mapper.writeValueAsBytes(result);
-			return esClient.prepareIndex("vodich", "result").setSource(json).get();
+			
+
+			// save result first
+			byte[] resultJson = mapper.writeValueAsBytes(result);
+			IndexResponse indexResponse = esClient.prepareIndex("vodich", "result").setSource(resultJson).get();
+
+			// save bulk result units later (for kibana graphs)
+			BulkRequestBuilder requestBuilder = esClient.prepareBulk();
+			System.out.println(result.getResult());
+			for (Object o: result.getResult()) {
+
+				@SuppressWarnings("unchecked")
+				Map<String, Object> mo = (Map<String, Object>) o;
+				XContentBuilder builder;
+				try {
+					builder = XContentFactory.jsonBuilder()
+							.startObject()
+							.field("id", mo.get("id"))
+							.field("time", mo.get("time"))
+							.endObject();
+				} catch (IOException e) {
+					continue;
+				}
+				System.out.println(indexResponse);
+				IndexRequestBuilder request = esClient
+						.prepareIndex("result_unit", indexResponse.getId())
+						.setSource(builder);
+				requestBuilder.add(request);
+			}
+			BulkResponse bulkResponse = requestBuilder.execute().actionGet();
+			int items= bulkResponse.getItems().length;
+			System.out.println("indexed [" + items + "] items, with failures? [" + bulkResponse.hasFailures()  + "]");
+			return indexResponse;
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 
 	public static Properties getProperties() {
 		if (properties == null) {
@@ -193,7 +231,4 @@ public class ElasticsearchUtils {
 		}
 		return properties;
 	}
-
-
-	
 }

@@ -1,14 +1,14 @@
 package com.vodich.core.bean;
 
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 public class Result {
 	private String id;
 	private String scenarioId;
 	private Date launchTime;
 	private Date finishTime;
-	private Map<String, Object> result;
+	private List<Object> result;
 	public String getId() {
 		return id;
 	}
@@ -33,10 +33,10 @@ public class Result {
 	public void setFinishTime(Date finishTime) {
 		this.finishTime = finishTime;
 	}
-	public Map<String, Object> getResult() {
+	public List<Object> getResult() {
 		return result;
 	}
-	public void setResult(Map<String, Object> result) {
+	public void setResult(List<Object> result) {
 		this.result = result;
 	}
 }
