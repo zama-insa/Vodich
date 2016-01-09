@@ -1,14 +1,9 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${language}" />
-<fmt:setBundle basename="text" />
-<!DOCTYPE html>
-<html lang="${language}">
-    <head>
-        <title>YOYOYOYO</title>
-    </head>
+
+<%-- <!DOCTYPE html>
+<html>
     <body>
         <form>
             <fmt:message key="login.label.yolo"/></p>
@@ -19,6 +14,7 @@
         </form>
     </body>
 </html>
+--%>
 
 <t:baseLayout>
 	<style>
@@ -36,6 +32,7 @@
 			color: rgb(51, 122, 183);
 		}
 	</style>
+		
 	<script>
 	$(document).ready(function() {
 		$("i.fa-minus").click(function(event){

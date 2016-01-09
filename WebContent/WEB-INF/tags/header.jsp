@@ -6,4 +6,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link href="res/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="res/lib/font-awesome-4.5.0/css/font-awesome.min.css" rel ="stylesheet"/>
+	<script src="switchlang.js"></script>
+	
 </head>

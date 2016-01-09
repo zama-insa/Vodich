@@ -93,7 +93,7 @@ public class CreateScenarioServlet extends HttpServlet {
 		saveUserInputs(request, flowCount);
 		WebUtils.forward(request, response, "create-scenario.jsp");
 	}
-
+	
 	private void actionAddFlow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int flowCount = Integer.parseInt(request.getParameter(ATT_FLOW_COUNT));
 		flowCount += 1;

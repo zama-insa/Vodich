@@ -2,9 +2,30 @@
 <br>
 <br>
 
+<body>
+        <form id="frmUser">
+                <label for="txtName">Change langage :</label>
+                <input type="button" id="btnSubmit" value="French" />
+                <br />
+                <br />
+                <div id="welcometext"></div>
+        </form>
+</body>
+<script>
+$(document).ready(function() {              
+    $('#btnSubmit').click(function(event) {   	
+    	var username=$('#txtName').val();
+        $.get('ChangeLangageServlet',{user:username},function(responseText) {
+            $('#welcometext').text(responseText);   
+            
+        });
+    });
+});
+</script>
+
 <div class="container">
 <div class="row">
-<button class="btn btn-primary" type=button onclick="location.href='create'">Create New Scenario</button>
+<button class="btn btn-primary" type=button onclick="location.href='create'"><fmt:message key="message_creationnew" /></button>
 </div>
 <br>
   <div class="row">
@@ -30,10 +51,10 @@
       </h4>
 	</div>
 	<div class="col-xs-6 col-sm-3">
-	<button class="btn btn-primary" type="button" onclick="location.href='launch?id=<c:out value="${scenario.id}'"/>">Launch</button>
+	<button class="btn btn-primary" type="button" onclick="location.href='launch?id=<c:out value="${scenario.id}'"/>"><fmt:message key="message_launch" /></button>
 	</div>
 	<div class="col-xs-6 col-sm-3">
-	<button class="btn btn-primary" type="button" onclick="location.href='delete?id=<c:out value="${scenario.id}'"/>">Delete</button>
+	<button class="btn btn-primary" type="button" onclick="location.href='delete?id=<c:out value="${scenario.id}'"/>"><fmt:message key="message_delete" /></button>
 	</div>
     </div>
     </div>
@@ -57,7 +78,6 @@
   </div>
   </div>
 </div>
-
 </div>
 
   
