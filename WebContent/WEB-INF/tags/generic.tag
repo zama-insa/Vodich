@@ -5,6 +5,8 @@
 <%@attribute name="messagePanel" fragment="true" %>
 <%@attribute name="body" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <html lang="${language}">
@@ -14,35 +16,19 @@
   
 
         <form id="frmUser">
-                <label for="txtName">Change language :</label>
-                <input type="button" id="btnSubmitFrench" value="French" />
-                <input type="button" id="btnSubmitEnglish" value="English" />
+        <span class="label label-default"> Language :</span>
+                <input class="btn btn-primary" type="button" id="btnSubmitFrench" value="French" />
+                <input class="btn btn-primary" type="button" id="btnSubmitEnglish" value="English" />
                 <br />
                 <br />
         </form>
 
-  	<div class="page-wrap">
+  	
     <div id="header">
-    	<form name="langForm" id="langForm" target="changeLanguage">
-    	<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-		<button class="btn btn-primary" type=button onclick="location.href='create'"><fmt:message key="message_creationnew" /></button>
-		<button class="btn btn-primary" type=button onclick="location.href='default'"><fmt:message key="message_displayt" /></button>
-		<%-- <button type="button" class="btn btn-secondary">1</button> --%>
-		  <div class="btn-group" role="group">
-		    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		      Change Language
-		    </button>
-		    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-		    <a class="dropdown-item" onclick="" value="fr">Français</a> 
-		    <a class="dropdown-item" onclick="" value="fr2">Français2</a> 
-		
-		   <a class="dropdown-item" onclick="switchLang('en');" value="en">English</a> 
-		      
-		    </div>
-		</div>
-		  </div></form>
+ 
+	
     </div>
-
+<div class="page-wrap">
     <div id="body">
       <jsp:invoke fragment="body"/>
     </div>

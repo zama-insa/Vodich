@@ -2,21 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%-- <!DOCTYPE html>
-<html>
-    <body>
-        <form>
-            <fmt:message key="login.label.yolo"/></p>
-            <select id="language" name="language" onchange="submit()">
-                <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-                <option value="fr" ${language == 'fr' ? 'selected' : ''}>Français</option>
-            </select>
-        </form>
-    </body>
-</html>
---%>
+
 
 <t:baseLayout>
+	<button class="btn btn-primary" type=button onclick="location.href='create'"><fmt:message key="message_creation" /> </button>
+    <button class="btn btn-primary" type=button onclick="location.href='default'"> <fmt:message key="message_displayt" /> </button>
+     <button class="btn btn-primary" type=button onclick="location.href='import'"> <fmt:message key="message_importt" /> </button>
+	
 	<style>
 		h2 a:hover {
 			text-decoration: none;

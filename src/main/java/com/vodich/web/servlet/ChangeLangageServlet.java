@@ -37,9 +37,10 @@ public class ChangeLangageServlet extends HttpServlet {
 	    Locale locale = (Locale) Config.get(session, Config.FMT_LOCALE);
 		System.out.println("Parametre langage recu : "+request.getParameter("language"));
 	    if ( request.getParameter("language") != null) {
-	         locale = new Locale(request.getParameter("language"));
+	    	locale = new Locale(request.getParameter("language"));
 	     }
 	     Config.set(session, Config.FMT_LOCALE, locale);
+	     WebUtils.forward(request, response, "create-scenario.jsp");
 	}
 
 	/**
@@ -61,7 +62,8 @@ public class ChangeLangageServlet extends HttpServlet {
 	         locale = new Locale(request.getParameter("language"));
 	     }
 	     Config.set(session, Config.FMT_LOCALE, locale);
-	     return ;
+	     WebUtils.forward(request, response, "create-scenario.jsp");
+	     
 	}
 	
 	/*

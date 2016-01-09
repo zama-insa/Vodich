@@ -1,27 +1,9 @@
 <t:baseLayout>
+<button class="btn btn-primary" type=button onclick="location.href='create'"><fmt:message key="message_creation" /> </button>
+    <button class="btn btn-primary" type=button onclick="location.href='default'"> <fmt:message key="message_displayt" /> </button>
+     <button class="btn btn-primary" type=button onclick="location.href='import'"> <fmt:message key="message_importt" /> </button>
 <br>
 <br>
-
-<body>
-        <form id="frmUser">
-                <label for="txtName">Change langage :</label>
-                <input type="button" id="btnSubmit" value="French" />
-                <br />
-                <br />
-                <div id="welcometext"></div>
-        </form>
-</body>
-<script>
-$(document).ready(function() {              
-    $('#btnSubmit').click(function(event) {   	
-    	var username=$('#txtName').val();
-        $.get('ChangeLangageServlet',{user:username},function(responseText) {
-            $('#welcometext').text(responseText);   
-            
-        });
-    });
-});
-</script>
 
 <div class="container">
 <div class="row">
