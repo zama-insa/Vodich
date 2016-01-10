@@ -14,9 +14,21 @@
 <br>
 <br>
 
-<form action="upload" method="post" enctype="multipart/form-data">
-    <input type="text" name="description" />  <input type="file" name="file" />    <input type="submit" />
+
+<head>
+<title><fmt:message key="message_importt" /></title>
+
+
+</head>
+
+<h3><fmt:message key="message_importt" /></h3>
+<fmt:message key="message_importselect" /><br />
+<form action="import" method="post" enctype="multipart/form-data">
+<input type="file" name="file" size="50" />
+<br />
+<input type="submit" value=<fmt:message key="message_importselect" /> />
 </form>
+
 
 
 </t:baseLayout>
