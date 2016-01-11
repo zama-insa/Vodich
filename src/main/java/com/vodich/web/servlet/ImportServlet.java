@@ -36,14 +36,14 @@ import com.vodich.dao.DAOException;
 @MultipartConfig
 public class ImportServlet extends HttpServlet {
 
-	private static final String PARAM_NAME = "Scenario name : ";
-	private static final String PARAM_CONSUMER = "Consumer : ";
-	private static final String PARAM_PRODUCER = "Producer : ";
-	private static final String PARAM_FREQUENCY = "Frequency : ";
-	private static final String PARAM_PROCESS_TIME = "ProcessTime : ";
-	private static final String PARAM_START_TIME = "Start : ";
-	private static final String PARAM_STOP_TIME = "Stop : ";
-	private static final String PARAM_MESSAGELOAD = "MessageLoad : ";
+	private static final String PARAM_NAME = "Scenario name ";
+	private static final String PARAM_CONSUMER = "Consumer ";
+	private static final String PARAM_PRODUCER = "Producer ";
+	private static final String PARAM_FREQUENCY = "Frequency ";
+	private static final String PARAM_PROCESS_TIME = "ProcessTime ";
+	private static final String PARAM_START_TIME = "Start ";
+	private static final String PARAM_STOP_TIME = "Stop ";
+	private static final String PARAM_MESSAGELOAD = "MessageLoad ";
 	private ArrayList<String> params = new ArrayList<String>();
 	private static final String ATT_ERROR_MSG = "error";
 	private static final long serialVersionUID = 1L;
@@ -71,56 +71,62 @@ public class ImportServlet extends HttpServlet {
 		Scenario scenario = new Scenario();
 		
 		List<Flow> flows = new ArrayList<>();
+		Flow flow = new Flow();
 		try {
 			String ligne = "";
 			int j = 0;
-			while (((ligne = reader.readLine()) != null) && j < params.size()) {
-				Flow flow = new Flow();
-				System.out.println(ligne);
-				System.out.println(j);
-				pattern = Pattern.compile(params.get(j));
-				matcher = pattern.matcher(ligne);
-				while (matcher.find()) {
-					Pattern p = Pattern.compile(":");
-					String[] val = p.split(ligne);
-					System.out.println("Valeurs récup " + val[1]);
-					if(params.get(j) == PARAM_NAME){
-						scenario.setName(val[1]);
-						j++;
-					}
-					else if(params.get(j) == PARAM_CONSUMER) {
-                    flow.setConsumer(val[1]);
-                    j++;
-					}
-					else if (params.get(j) == PARAM_PRODUCER){
-						flow.setProducer(val[1]);
-						j++;
-					}
-					else if (params.get(j) == PARAM_FREQUENCY ){
-						flow.setProducer(val[1]);
-					}
-					else if (params.get(j) == PARAM_PROCESS_TIME){
-						flow.setProcessTime(Double.parseDouble(val[1]));
-					}
-					else if (params.get(j) == PARAM_START_TIME){
-						Double d = Double.parseDouble(val[1]);
-						flow.setStart( d.intValue() );
-					}
-					else if (params.get(j) == PARAM_STOP_TIME){
-						flow.setStop(Integer.parseInt(val[1]));
-					}
-					else if (params.get(j) == PARAM_MESSAGELOAD) {
-						j = 0;
-						flow.setMessageLoad(Integer.parseInt(val[1]));
-						flows.add(flow);
-					} else {
-						j++;
-					}
+			int k = 0;
+			while ((ligne = reader.readLine()) != null) {
+				// System.out.println("Ligne :"+ligne);
+				// Split de la ligne sur rencontre du caractère ':'
+				Pattern p = Pattern.compile(": ");
+				String[] val = p.split(ligne);
+				Boolean manyflows = false;
+				/*
+				 * System.out.println("Valeurs récupérées autour de :"); for
+				 * (k=0; k < val.length; k++){
+				 * System.out.println("_"+val[k]+"_"); }
+				 */
+
+				if (val[0].equals(PARAM_NAME)) {
+					System.out.println("Le nom est rentré");
+					scenario.setName(val[1]);
+				} else if (val[0].equals(PARAM_CONSUMER)) {
+					// System.out.println("Le parametre consumer du flow est
+					// complété");
+					flow.setConsumer(val[1]);
+				} else if (val[0].equals(PARAM_PRODUCER)) {
+					// System.out.println("Le parametre producer du flow est
+					// complété");
+					flow.setProducer(val[1]);
+				} else if (val[0].equals(PARAM_FREQUENCY)) {
+					//System.out.println("Le parametre frequence du flow est complété");
+					flow.setProducer(val[1]);
+				} else if (val[0].equals(PARAM_PROCESS_TIME)) {
+					// System.out.println("Le parametre processtime du flow est
+					// complété");
+					flow.setProcessTime(Double.parseDouble(val[1]));
+				} else if (val[0].equals(PARAM_START_TIME)) {
+					// System.out.println("Le parametre starttime du flow est
+					// complété");
+					Double d = Double.parseDouble(val[1]);
+					flow.setStart(d.intValue());
+				} else if (val[0].equals(PARAM_STOP_TIME)) {
+					// System.out.println("Le parametre Stoptime du flow est
+					// complété");
+					flow.setStop(Integer.valueOf(val[1]));
+				} else if (val[0].equals(PARAM_MESSAGELOAD)) {
+					// System.out.println("Le parametre messageLoad du flow est
+					// complété");
+					flow.setMessageLoad(Integer.valueOf(val[1]));
+					flows.add(flow);
+					//flow = new Flow();
 				}
 			}
-			scenario.setFlows(flows);	
-			System.out.println(scenario.getName());
-			System.out.println("Taille de la liste des flots"+scenario.getFlows().size());
+			scenario.setFlows(flows);
+			// System.out.println(scenario.getName());
+			// System.out.println("Taille de la liste des flots " + scenario.getFlows().size());
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
