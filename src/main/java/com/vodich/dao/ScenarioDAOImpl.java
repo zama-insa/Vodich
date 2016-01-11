@@ -1,14 +1,14 @@
 package com.vodich.dao;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vodich.business.CommonService;
-import com.vodich.business.CommonServiceImpl;
-import com.vodich.core.bean.Scenario;
+	import com.vodich.core.bean.Scenario;
+import com.vodich.core.util.VodichUtils;
 
 public class ScenarioDAOImpl implements ScenarioDAO {
 	
@@ -18,10 +18,13 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 	@Override
 	public void save(Scenario scenario) throws DAOException {
 		try {
-			IndexResponse response = ElasticsearchUtils.saveScenario(scenario);
-			System.out.println(response);
+			if (VodichUtils.isNullOrEmpty(scenario.getName())) {
+				throw new DAOException("Required field missing for Scenario : 'name'");
+			}
+			String scenarioId = ElasticsearchUtils.saveScenario(scenario);
+			scenario.setId(scenarioId);
 		} catch (Exception e) {
-			throw new DAOException("[DAO]Â Save scenario failed", e);
+			throw new DAOException("[DAO] Save scenario failed", e);
 		}
 	}
 
