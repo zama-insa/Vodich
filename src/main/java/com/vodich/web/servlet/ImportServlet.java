@@ -108,7 +108,7 @@ public class ImportServlet extends HttpServlet {
 					flow.setProcessTime(Double.parseDouble(val[1]));
 				} else if (val[0].equals(PARAM_START_TIME)) {
 					// System.out.println("Le parametre starttime du flow est
-					// complété");
+					// complété"); 
 					Double d = Double.parseDouble(val[1]);
 					flow.setStart(d.intValue());
 				} else if (val[0].equals(PARAM_STOP_TIME)) {
