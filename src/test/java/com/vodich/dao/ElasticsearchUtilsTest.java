@@ -1,5 +1,6 @@
 package com.vodich.dao;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -31,12 +32,15 @@ public class ElasticsearchUtilsTest {
 	@Test
 	public void deleteScenarioTestFound() {
 		Scenario scenario = new Scenario();
-		scenario.setId("42");
-		ElasticsearchUtils.saveScenario(scenario);
+		scenario.setName("42");
+		String scenarioId = ElasticsearchUtils.saveScenario(scenario);
+		System.out.println(scenarioId);
 		try {
-			Thread.sleep(2000); // we have to wait 1 sec, time needed for the
+			Thread.sleep(1000); // we have to wait 1 sec, time needed for the
 								// scenario to be indexed and searchable
-			assertTrue(ElasticsearchUtils.deleteScenario("42").isFound());
+			assertTrue(ElasticsearchUtils.deleteScenario(scenarioId).isFound());
+			Thread.sleep(1000);
+			assertNull(ElasticsearchUtils.load(scenarioId));
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
@@ -44,7 +48,7 @@ public class ElasticsearchUtilsTest {
 
 	@Test
 	public void deleteScenarioTestNotFound() {
-		assertNull(ElasticsearchUtils.deleteScenario("166"));
+		assertFalse(ElasticsearchUtils.deleteScenario("166").isFound());
 	}
 
 	@Test
@@ -53,8 +57,7 @@ public class ElasticsearchUtilsTest {
 		scenario.setName("42");
 		String scenarioId = ElasticsearchUtils.saveScenario(scenario);
 		try {
-			Thread.sleep(1000); // we have to wait 1 sec, time needed for the
-								// scenario to be indexed and searchable
+			Thread.sleep(1000);
 			assertNotNull(ElasticsearchUtils.load(scenarioId));
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
@@ -63,8 +66,6 @@ public class ElasticsearchUtilsTest {
 
 	@Test
 	public void loadScenarioTestNotFound() throws DAOException {
-		// we have to wait 1 sec, time needed for the scenario to be indexed and
-		// searchable
 		assertNull(ElasticsearchUtils.load("46"));
 	}
 

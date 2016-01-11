@@ -6,21 +6,14 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
-import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.node.Node;
@@ -29,7 +22,6 @@ import org.elasticsearch.search.SearchHit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vodich.core.bean.Result;
 import com.vodich.core.bean.Scenario;
 import com.vodich.core.util.VodichUtils;
 
@@ -100,15 +92,7 @@ public class ElasticsearchUtils {
 	}
 
 	public static DeleteResponse deleteScenario(String scenarioId) {
-
-		SearchResponse response = esClient.prepareSearch("vodich").setTypes("scenario")
-				.setQuery(QueryBuilders.matchQuery("id", scenarioId)).execute().actionGet();
-
-		if (response.getHits().totalHits() == 0) {
-			return null;
-		} else {
-			return esClient.prepareDelete("vodich", "scenario", response.getHits().getAt(0).id()).execute().actionGet();
-		}
+		return esClient.prepareDelete("vodich", "scenario", scenarioId).execute().actionGet();
 	}
 
 	public static List<Scenario> loadScenarii() {
@@ -137,12 +121,12 @@ public class ElasticsearchUtils {
 	public static Scenario load(String scenarioID) {
 		Scenario scenario;
 		GetResponse response = esClient.prepareGet("vodich", "scenario", scenarioID).execute().actionGet();
-		System.out.println(response.isExists());
 		if (!response.isExists()) {
 			return null;
 		}
 		try {
 			scenario = mapper.readValue(response.getSourceAsBytes(), Scenario.class);
+			scenario.setId(response.getId());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -177,7 +161,8 @@ public class ElasticsearchUtils {
 		if (properties == null) {
 			properties = new Properties();
 			try {
-				properties.load(ElasticsearchUtils.class.getClassLoader().getResourceAsStream("elasticsearch.properties"));
+				properties.load(
+						ElasticsearchUtils.class.getClassLoader().getResourceAsStream("elasticsearch.properties"));
 			} catch (IOException e) {
 				e.printStackTrace();
 				return null;
@@ -185,7 +170,5 @@ public class ElasticsearchUtils {
 		}
 		return properties;
 	}
-	
 
-	
 }

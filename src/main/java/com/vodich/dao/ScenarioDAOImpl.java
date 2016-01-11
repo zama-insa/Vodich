@@ -1,17 +1,15 @@
 package com.vodich.dao;
 
-import java.net.URLEncoder;
 import java.util.List;
 
 import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.index.IndexResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-	import com.vodich.core.bean.Scenario;
+import com.vodich.core.bean.Scenario;
 import com.vodich.core.util.VodichUtils;
 
 public class ScenarioDAOImpl implements ScenarioDAO {
-	
+
 	private ScenarioDAO scenarioDAO;
 	private static ObjectMapper mapper = new ObjectMapper();
 
@@ -24,27 +22,27 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 			String scenarioId = ElasticsearchUtils.saveScenario(scenario);
 			scenario.setId(scenarioId);
 		} catch (Exception e) {
-			throw new DAOException("[DAO] Save scenario failed", e);
+			throw new DAOException("[DAO] Save scenario failed", e);
 		}
 	}
 
 	@Override
-	public void delete(String scenarioId) throws DAOException{
-		
+	public void delete(String scenarioId) throws DAOException {
+
 		try {
-		DeleteResponse response = ElasticsearchUtils.deleteScenario(scenarioId);
-		System.out.println(response);
+			DeleteResponse response = ElasticsearchUtils.deleteScenario(scenarioId);
+			System.out.println(response);
 		} catch (Exception e) {
 			throw new DAOException("[DAO]Â Save scenario failed", e);
 		}
-		
+
 	}
 
 	@Override
 	public Scenario load(String scenarioId) {
 		return ElasticsearchUtils.load(scenarioId);
 	}
-	
+
 	public Scenario loadByName(String scenarioName) throws DAOException {
 		return ElasticsearchUtils.loadByName(scenarioName);
 	}
@@ -53,15 +51,17 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 	public List<Scenario> loadAll() {
 		return ElasticsearchUtils.loadScenarii();
 	}
-	
-	private ScenarioDAOImpl() {}
+
+	private ScenarioDAOImpl() {
+	}
+
 	private static ScenarioDAOImpl instance;
+
 	public static ScenarioDAO getInstance() {
 		if (instance == null) {
 			instance = new ScenarioDAOImpl();
 		}
 		return instance;
 	}
-	
-	
+
 }
