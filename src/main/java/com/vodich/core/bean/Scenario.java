@@ -41,19 +41,14 @@ public class Scenario {
 		this.name = name;
 	}
 
+
 	@Override
-	public boolean equals(Object o) {
-		if (o == null)
-			return false;
-		Scenario that = (Scenario) o;
-		if (id.compareTo(that.id) == 0) {
-			if ((createdAt).compareTo(that.createdAt) == 0) {
-				if ((flows).equals(that.flows)) {
-					return true;
-				}
-			}
-		}
-		return false;
+	public int hashCode() {
+		int result = 2;
+		int c = (id != null ? id.hashCode() : 0)
+		+ (createdAt != null ? createdAt.hashCode() : 0)
+		+ (flows != null ? flows.hashCode() : 0);
+		return 37 * result + c;
 	}
 
 	@Override

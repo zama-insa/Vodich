@@ -83,7 +83,7 @@ public class ScenarioServiceImplTest {
 	@Test
 	public void testLoadByNameNotFound() throws DAOException {
 		when(scenarioDAOMock.loadByName("42")).thenReturn(null);
-		assertNull(scenarioServiceImpl.loadAll());
+		assertNull(scenarioServiceImpl.loadByName("42"));
 	}
 
 	@Test
