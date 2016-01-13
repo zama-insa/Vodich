@@ -6,14 +6,22 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
+import org.apache.activemq.protobuf.compiler.parser.ProtoParserTokenManager;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.node.Node;
@@ -22,10 +30,12 @@ import org.elasticsearch.search.SearchHit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vodich.core.bean.Result;
 import com.vodich.core.bean.Scenario;
 import com.vodich.core.util.VodichUtils;
 
 public class ElasticsearchUtils {
+	
 	private static Client esClient;
 	private static ObjectMapper mapper;
 	private static Properties properties;
@@ -156,6 +166,66 @@ public class ElasticsearchUtils {
 		return scenario;
 
 	}
+
+	public static Result loadScenarioResult(String resultId) {
+		Result result;
+		GetResponse response = esClient.prepareGet("vodich", "result", resultId)
+				.execute()
+				.actionGet();
+		try {
+
+			result = mapper.readValue(response.getSourceAsBytes(), Result.class);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+		return result;
+	}
+
+
+	public static IndexResponse saveScenarioResult(Result result) {
+		try {
+			
+
+			// save result first
+			byte[] resultJson = mapper.writeValueAsBytes(result);
+			IndexResponse indexResponse = esClient.prepareIndex("vodich", "result").setSource(resultJson).get();
+
+			// save bulk result units later (for kibana graphs)
+			BulkRequestBuilder requestBuilder = esClient.prepareBulk();
+			System.out.println(result.getResult());
+			for (Object o: result.getResult()) {
+
+				@SuppressWarnings("unchecked")
+				Map<String, Object> mo = (Map<String, Object>) o;
+				XContentBuilder builder;
+				try {
+					builder = XContentFactory.jsonBuilder()
+							.startObject()
+							.field("id", mo.get("id"))
+							.field("time", mo.get("time"))
+							.endObject();
+				} catch (IOException e) {
+					continue;
+				}
+				System.out.println(indexResponse);
+				IndexRequestBuilder request = esClient
+						.prepareIndex("result_unit", indexResponse.getId())
+						.setSource(builder);
+				requestBuilder.add(request);
+			}
+			BulkResponse bulkResponse = requestBuilder.execute().actionGet();
+			int items= bulkResponse.getItems().length;
+			System.out.println("indexed [" + items + "] items, with failures? [" + bulkResponse.hasFailures()  + "]");
+			return indexResponse;
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 
 	public static Properties getProperties() {
 		if (properties == null) {
