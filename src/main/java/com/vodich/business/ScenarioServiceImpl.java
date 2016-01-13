@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.jms.JMSException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.istack.logging.Logger;
@@ -16,14 +15,13 @@ import com.vodich.core.bean.Result;
 import com.vodich.core.bean.Scenario;
 import com.vodich.core.util.JMSUtils;
 import com.vodich.dao.DAOException;
-import com.vodich.dao.ElasticsearchUtils;
 import com.vodich.dao.ResultDAO;
 import com.vodich.dao.ResultDAOImpl;
 import com.vodich.dao.ScenarioDAO;
 import com.vodich.dao.ScenarioDAOImpl;
 
 public class ScenarioServiceImpl implements ScenarioService {
-	
+
 	private ScenarioDAO scenarioDAO;
 	private ResultDAO resultDAO;
 	private JMSUtils jmsUtils;
@@ -42,11 +40,11 @@ public class ScenarioServiceImpl implements ScenarioService {
 			throw new DAOException("Scenario with id " + scenarioId + " not found");
 		}
 		try {
-			for(Flow flow : scenario.getFlows()){
+			for (Flow flow : scenario.getFlows()) {
 				String json = mapper.writeValueAsString(flow);
 				jmsUtils.startConnection();
 				jmsUtils.send(1, json, Integer.parseInt(flow.getConsumer()));
-			
+
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -71,18 +69,19 @@ public class ScenarioServiceImpl implements ScenarioService {
 	}
 
 	@Override
-	public void delete(String scenarioId) throws DAOException {
-		scenarioDAO.delete(scenarioId);
+	public boolean delete(String scenarioId) throws DAOException {
+		return scenarioDAO.delete(scenarioId);
 
 	}
-	
+
 	ScenarioServiceImpl(ScenarioDAO scenarioDAO, ResultDAO resultDAO, JMSUtils jmsUtils) {
 		this.scenarioDAO = scenarioDAO;
 		this.resultDAO = resultDAO;
 		this.jmsUtils = jmsUtils;
 	}
-	
+
 	private static ScenarioServiceImpl instance;
+
 	public static ScenarioService getInstance() {
 		if (instance == null) {
 			try {
@@ -104,10 +103,9 @@ public class ScenarioServiceImpl implements ScenarioService {
 	public Scenario load(String scenarioID) throws DAOException {
 		return scenarioDAO.load(scenarioID);
 	}
-	
+
 	public Scenario loadByName(String scenarioName) throws DAOException {
 		return scenarioDAO.loadByName(scenarioName);
 	}
-
 
 }

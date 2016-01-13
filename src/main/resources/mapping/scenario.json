@@ -1,0 +1,43 @@
+{
+	"properties": {
+		"name":
+		{
+			"type": "string",
+			"include_in_all": "false",
+			"index": "not_analyzed"
+		},
+		"createdAt":
+		{
+			"type": "date",
+			"format": "dateOptionalTime",
+			"index" : "not_analyzed"
+		},
+		"flows":
+		{
+			"type": "object",
+			"properties": {
+				"consumer": {
+					"type": "string"
+				},
+				"frequency": {
+					"type": "double"
+				},
+				"messageLoad": {
+					"type": "long"
+				},
+				"processTime": {
+					"type": "double"
+				},
+				"producer": {
+					"type": "string"
+				},
+				"start": {
+					"type": "long"
+				},
+				"stop": {
+					"type": "long"
+				}
+			}
+		}
+	}
+}
