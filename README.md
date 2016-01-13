@@ -2,7 +2,7 @@
 
 ESB Qualification Scenario Launcher
 
-[![Build Status](http://46.101.112.94:8080/job/VodichJob/badge/icon)](http://46.101.112.94:8080/job/Vodich Job)
+[![Build Status](http://46.101.112.94:8080/job/VodichJob/badge/icon)](http://46.101.112.94:8080/job/VodichJob)
 
 ## Configure the whole thing
 
