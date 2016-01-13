@@ -6,7 +6,10 @@
   <packaging>war</packaging>
   <build>
   	<finalName>Vodich-WEBAPP</finalName>
+  	<outputDirectory>target/classes</outputDirectory>
+  	<testOutputDirectory>target/test-classes</testOutputDirectory>
     <sourceDirectory>src/main/java</sourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -17,6 +20,42 @@
         </configuration>
       </plugin>
       <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.7</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/classes</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>src/main/resources</directory>
+                </resource>
+              </resources>              
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-test-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/test-classes</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>src/test/resources</directory>
+                </resource>
+              </resources>              
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>2.4</version>
         <configuration>
@@ -24,6 +63,24 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
+      <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>cobertura-maven-plugin</artifactId>
+           <version>2.7</version>
+           <configuration>
+               <formats>
+                   <format>xml</format>
+               </formats>
+           </configuration>
+           <executions>
+               <execution>
+                   <phase>package</phase>
+                   <goals>
+                       <goal>cobertura</goal>
+                   </goals>
+               </execution>
+           </executions>
+       </plugin>
     </plugins>
   </build>
   <dependencies>
