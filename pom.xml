@@ -39,7 +39,7 @@
         <executions>
           <execution>
             <id>copy-resources</id>
-            <phase>compile</phase>
+            <phase>package</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
@@ -51,7 +51,23 @@
                   <filtering>true</filtering>
                 </resource>
               </resources>              
-            </configuration>            
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-test-resources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/test-classes</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>src/test/resources</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>              
+            </configuration>
           </execution>
         </executions>
       </plugin>
