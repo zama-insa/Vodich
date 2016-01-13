@@ -31,7 +31,11 @@
             	font-weight: bold !important;
             	font-size: xx-large !important;
             }
+            #audio{
+            	display: none;
+            }
 </style>
+<audio controls id="audio" src="res/audio/loup.mp3"></audio>
 <script>
 window.onload = function onLoad() {
 	var time = ${time_progress};
@@ -48,13 +52,21 @@ window.onload = function onLoad() {
         },
         step: function(state, bar) {
             bar.setText((bar.value() * 100).toFixed(0));
-            
+          	if(bar.value()==1){
+          		bar.stop();
+          		play_audio();
+          	}
         }
     });
     circle.animate(1, function() {
         circle.animate(1);
     })
+	function play_audio(){
+    	var audio = document.getElementById("audio"); 
 
+   		audio.play();
+   		setTimeout(function(){audio.pause();},5000);
+    }
 };
 
 </script>  
