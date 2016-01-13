@@ -10,22 +10,6 @@
   	<testOutputDirectory>target/test-classes</testOutputDirectory>
     <sourceDirectory>src/main/java</sourceDirectory>
     <testSourceDirectory>src/test/java</testSourceDirectory>
-    <resources>
-    	<resource>
-    		<directory>src/main/resources</directory>
-    		<includes>
-    			<include>*</include>
-    		</includes>
-    	</resource>
-    </resources>
-    <testResources>
-    	<testResource>
-    		<directory>src/test/resources</directory>
-    		<includes>
-    			<include>*</include>
-    		</includes>
-    	</testResource>
-    </testResources>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -34,6 +18,42 @@
           <source>1.7</source>
           <target>1.7</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.7</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/classes</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>src/main/resources</directory>
+                </resource>
+              </resources>              
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-test-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/test-classes</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>src/test/resources</directory>
+                </resource>
+              </resources>              
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
