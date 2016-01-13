@@ -17,8 +17,8 @@
 
         <form id="frmUser">
         <span class="label label-default"> Language :</span>
-                <input class="btn btn-primary" type="button" id="btnSubmitFrench" value="French" />
-                <input class="btn btn-primary" type="button" id="btnSubmitEnglish" value="English" />
+                <input class="btn btn-secondary" type="button" id="btnSubmitFrench" value="French" />
+                <input class="btn btn-secondary" type="button" id="btnSubmitEnglish" value="English" />
                 <br />
                 <br />
         </form>

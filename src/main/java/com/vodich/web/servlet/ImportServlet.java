@@ -176,19 +176,19 @@ public class ImportServlet extends HttpServlet {
 		
 		if (VodichUtils.isNullOrEmpty(scenario.getName())) {
 			request.setAttribute(ATT_ERROR_MSG, "The scenario name is not specified");
-			WebUtils.forward(request, response, "create-scenario.jsp");
+			WebUtils.forward(request, response, "import.jsp");
 			return;
 		}
 		
 		try {
 			if (scenarioService.loadByName(scenario.getName()) != null) {
 				request.setAttribute(ATT_ERROR_MSG, "Scenario name '" + scenario.getName()+ "' already exists");
-				WebUtils.forward(request, response, "create-scenario.jsp");
+				WebUtils.forward(request, response, "import.jsp");
 				return;
 			}
 		} catch (DAOException e) {
 			request.setAttribute(ATT_ERROR_MSG, "Database error : Check existing scenario failed");
-			WebUtils.forward(request, response, "create-scenario.jsp");
+			WebUtils.forward(request, response, "import.jsp");
 			e.printStackTrace();
 			return;
 		}
@@ -197,7 +197,7 @@ public class ImportServlet extends HttpServlet {
 			scenarioService.save(scenario);
 		} catch (DAOException e) {
 			request.setAttribute(ATT_ERROR_MSG, "Database error : Save scenario failed");
-			WebUtils.forward(request, response, "create-scenario.jsp");
+			WebUtils.forward(request, response, "import.jsp");
 			return;
 		}
 		try {

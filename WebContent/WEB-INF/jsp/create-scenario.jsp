@@ -7,7 +7,18 @@
 <t:baseLayout>
 	<button class="btn btn-primary" type=button onclick="location.href='create'"><fmt:message key="message_creation" /> </button>
     <button class="btn btn-primary" type=button onclick="location.href='default'"> <fmt:message key="message_displayt" /> </button>
-     <button class="btn btn-primary" type=button onclick="location.href='import'"> <fmt:message key="message_importt" /> </button>
+    <button class="btn btn-primary" type=button onclick="location.href='import'"> <fmt:message key="message_importt" /> </button>
+	
+	<ul class="nav nav-pills">
+<button type="button"  onclick="location.href='import'" class="btn btn-default" aria-label="Left Align">
+  <img src="res/img/zama.png" class="images_petit"  >
+</button>
+
+  <li role="presentation"><a href="default">Default</a></li>
+  <li role="presentation"><a href="#">Messages</a></li>
+</ul>
+	
+	
 	
 	<style>
 		h2 a:hover {

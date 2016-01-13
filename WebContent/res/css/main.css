@@ -16,3 +16,13 @@ html, body {
 .site-footer, .page-wrap:after {
   height: 42px; 
 }
+ .images_petit {
+width:80px;
+height:80px;
+} 
+#formulaire {
+    text-align: right;
+}
+#Zamapng {
+    text-align: left;
+}

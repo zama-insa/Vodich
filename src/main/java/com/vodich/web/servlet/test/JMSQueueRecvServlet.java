@@ -60,3 +60,4 @@ public class JMSQueueRecvServlet extends HttpServlet {
 		out.println("</html>");
 	}
 }
+
