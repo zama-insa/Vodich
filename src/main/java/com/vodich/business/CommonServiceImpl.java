@@ -11,9 +11,12 @@ public class CommonServiceImpl implements CommonService {
 	public int getProducerNum() {
 		return 5; // constant for now
 	}
-	
-	private CommonServiceImpl() {}
+
+	CommonServiceImpl() {
+	}
+
 	private static CommonServiceImpl instance;
+
 	public static CommonService getInstance() {
 		if (instance == null) {
 			instance = new CommonServiceImpl();
