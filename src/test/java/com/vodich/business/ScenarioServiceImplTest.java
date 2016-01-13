@@ -22,6 +22,7 @@ import com.vodich.core.bean.Flow;
 import com.vodich.core.bean.Scenario;
 import com.vodich.core.util.JMSUtils;
 import com.vodich.dao.DAOException;
+import com.vodich.dao.ResultDAO;
 import com.vodich.dao.ScenarioDAO;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -33,11 +34,14 @@ public class ScenarioServiceImplTest {
 	@Mock
 	JMSUtils jmsUtilsMock;
 
+	@Mock
+	ResultDAO resultDAOMock;
+	
 	ScenarioServiceImpl scenarioServiceImpl;
 
 	@Before
 	public void setUp() {
-		scenarioServiceImpl = new ScenarioServiceImpl(scenarioDAOMock, jmsUtilsMock);
+		scenarioServiceImpl = new ScenarioServiceImpl(scenarioDAOMock, resultDAOMock, jmsUtilsMock);
 	}
 
 	@Test
