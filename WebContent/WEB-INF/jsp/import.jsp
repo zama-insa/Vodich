@@ -1,18 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Import a scenario</title>
-</head>
-<body>
 <t:baseLayout>
-<button class="btn btn-primary" type=button onclick="location.href='create'"><fmt:message key="message_creation" /> </button>
-<button class="btn btn-primary" type=button onclick="location.href='default'"> <fmt:message key="message_displayt" /> </button>
-<button class="btn btn-primary" type=button onclick="location.href='import'"> <fmt:message key="message_importt" /> </button>
-<br>
-<br>
+
+<div class="container-fluid">
+  <div class="row">
+  <div class="col-md-2"><button type="button"  onclick="location.href='default'" class="btn btn-default" aria-label="Left Align">
+  <img src="res/img/zama.png" class="images_petit"  >
+</button>
+</div>
+    <div class="col-md-1"><a href="accessibility"> <fmt:message key="message_gettingStarted"/> </a></div>
+    <div class="col-md-1" ><a href="default"> <fmt:message key="message_scenarii"/> </a> </div>
+    <div class="col-md-1"><a href="contact"> Contact</a></div>
+    <div class="col-md-1"> <button class="btn btn-primary" type=button onclick="location.href='create'"><fmt:message key="message_creation" /> </button></div>
+    <div class="col-md-1"> <button class="btn btn-primary" type=button onclick="location.href='import'"> <fmt:message key="message_importt" /> </button></div>
+   </div>
+</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+			<h2><a href="import"><fmt:message key="message_importt" /></a></h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+			<h2><a href="import"><fmt:message key="message_importt" /></a></h2>
+			</div>
+		</div>
 
 
 <head>
