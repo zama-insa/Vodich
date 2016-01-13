@@ -46,6 +46,9 @@ public class LaunchServlet extends HttpServlet {
 		String scenarioID  = (String)request.getParameter(PARAM_SCENARIO_ID);
 		try {
 			scenarioService.launch(scenarioID);
+			Scenario scenario = scenarioService.load(scenarioID);
+			double time_progress = scenarioService.getMaxtime(scenario);
+			request.setAttribute("time_progress",time_progress);
 			WebUtils.forward(request, response, "launch.jsp");
 
 		} catch (DAOException e1) {
@@ -66,7 +69,7 @@ public class LaunchServlet extends HttpServlet {
 		}
 		
 		
-
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

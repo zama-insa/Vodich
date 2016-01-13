@@ -20,4 +20,6 @@ public interface ScenarioService {
 	public Scenario load(String scenarioID) throws DAOException;
 	
 	public Scenario loadByName(String scenarioName) throws DAOException;
+	
+	public double getMaxtime(Scenario scenario);
 }

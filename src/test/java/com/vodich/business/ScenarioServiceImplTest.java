@@ -57,4 +57,34 @@ public class ScenarioServiceImplTest {
 		when(scenarioDAOMock.load("42")).thenReturn(s);
 		scenarioServiceImpl.launch("42");
 	}
+	
+	@Test
+	public void testgetMaxTime1(){
+		Scenario s = new Scenario();
+		s.setFlows(new ArrayList<Flow>());
+		Flow flow1 = new Flow();
+		flow1.setProcessTime(100);
+		flow1.setStop(50);
+		Flow flow2 = new Flow();
+		flow2.setProcessTime(10);
+		flow2.setStop(49);
+		s.getFlows().add(flow1);
+		s.getFlows().add(flow2);
+		assertEquals(scenarioServiceImpl.getMaxtime(s),55100.0,0);
+	}
+	
+	@Test
+	public void testgetMax2(){
+		Scenario s = new Scenario();
+		s.setFlows(new ArrayList<Flow>());
+		Flow flow1 = new Flow();
+		flow1.setProcessTime(0);
+		flow1.setStop(50);
+		Flow flow2 = new Flow();
+		flow2.setProcessTime(1100);
+		flow2.setStop(49);
+		s.getFlows().add(flow1);
+		s.getFlows().add(flow2);
+		assertEquals(scenarioServiceImpl.getMaxtime(s),55100.0,0);
+	}
 }

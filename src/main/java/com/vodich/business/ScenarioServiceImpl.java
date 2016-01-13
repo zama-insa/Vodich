@@ -33,7 +33,7 @@ public class ScenarioServiceImpl implements ScenarioService {
 	public void save(Scenario scenario) throws DAOException {
 		scenarioDAO.save(scenario);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void launch(String scenarioId) throws DAOException, JMSException {
@@ -53,22 +53,28 @@ public class ScenarioServiceImpl implements ScenarioService {
 		} finally {
 			jmsUtils.stopConnection();
 		}
-		jmsUtils.startConnection();
-		String resultString = jmsUtils.receive();
-		Map<String, Object> resultJson;
-		try {
-			resultJson = mapper.readValue(resultString, new TypeReference<Map<String, Object>>() {});
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
-		Result result = new Result();
-		result.setFinishTime(new Date());
-		result.setScenarioId(scenarioId);
-		result.setResult((List<Object>) resultJson.get("messageResults"));
-		resultDAO.save(result);
-		jmsUtils.stopConnection();
+			
+			/*jmsUtils.startConnection();
+			String resultString = jmsUtils.receive();
+			
+			Map<String, Object> resultJson;
+			try {
+				resultJson = mapper.readValue(resultString, new TypeReference<Map<String, Object>>() {});
+			} catch (IOException e) {
+				e.printStackTrace();
+				return;
+			}
+			Result result = new Result();
+			result.setFinishTime(new Date());
+			result.setScenarioId(scenarioId);
+			result.setResult((List<Object>) resultJson.get("messageResults"));
+			resultDAO.save(result);
+			jmsUtils.stopConnection();
+			*/
+		
 	}
+	
+	
 
 	@Override
 	public void delete(String scenarioId) throws DAOException {
@@ -107,6 +113,17 @@ public class ScenarioServiceImpl implements ScenarioService {
 	
 	public Scenario loadByName(String scenarioName) throws DAOException {
 		return scenarioDAO.loadByName(scenarioName);
+	}
+
+	@Override
+	public double getMaxtime(Scenario scenario) {
+		double max = 0;
+		for(Flow flow : scenario.getFlows()){
+			if(((double)(flow.getStop()*1000)+flow.getProcessTime()>max)){
+				max = flow.getStop()*1000+flow.getProcessTime();
+			}
+		}
+		return max+5000;
 	}
 
 
