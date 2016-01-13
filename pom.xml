@@ -39,7 +39,7 @@
         <executions>
           <execution>
             <id>copy-resources</id>
-            <phase>package</phase>
+            <phase>process-resources</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
@@ -48,14 +48,13 @@
               <resources>          
                 <resource>
                   <directory>src/main/resources</directory>
-                  <filtering>true</filtering>
                 </resource>
               </resources>              
             </configuration>
           </execution>
           <execution>
             <id>copy-test-resources</id>
-            <phase>package</phase>
+            <phase>process-resources</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
@@ -64,7 +63,6 @@
               <resources>          
                 <resource>
                   <directory>src/test/resources</directory>
-                  <filtering>true</filtering>
                 </resource>
               </resources>              
             </configuration>
