@@ -9,7 +9,6 @@ import javax.jms.JMSException;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.istack.logging.Logger;
 import com.vodich.core.bean.Flow;
 import com.vodich.core.bean.Result;
 import com.vodich.core.bean.Scenario;
@@ -52,23 +51,23 @@ public class ScenarioServiceImpl implements ScenarioService {
 			jmsUtils.stopConnection();
 		}
 			
-			/*jmsUtils.startConnection();
-			String resultString = jmsUtils.receive();
+		jmsUtils.startConnection();
+		String resultString = jmsUtils.receive();
+		
+		Map<String, Object> resultJson;
+		try {
+			resultJson = mapper.readValue(resultString, new TypeReference<Map<String, Object>>() {});
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
+		Result result = new Result();
+		result.setFinishTime(new Date());
+		result.setScenarioId(scenarioId);
+		result.setResult((List<Object>) resultJson.get("messageResults"));
+		resultDAO.save(result);
+		jmsUtils.stopConnection();
 			
-			Map<String, Object> resultJson;
-			try {
-				resultJson = mapper.readValue(resultString, new TypeReference<Map<String, Object>>() {});
-			} catch (IOException e) {
-				e.printStackTrace();
-				return;
-			}
-			Result result = new Result();
-			result.setFinishTime(new Date());
-			result.setScenarioId(scenarioId);
-			result.setResult((List<Object>) resultJson.get("messageResults"));
-			resultDAO.save(result);
-			jmsUtils.stopConnection();
-			*/
 		
 	}
 	

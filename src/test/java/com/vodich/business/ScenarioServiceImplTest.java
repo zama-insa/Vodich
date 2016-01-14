@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.jms.JMSException;
 
@@ -45,6 +46,12 @@ public class ScenarioServiceImplTest {
 	}
 
 	@Test
+	public void testSaveScenario() throws DAOException {
+		Scenario s = new Scenario();
+		scenarioServiceImpl.save(s);
+	}
+	
+	@Test
 	public void testLoadByIdNonExistScenario() throws DAOException {
 		when(scenarioDAOMock.load("42")).thenReturn(null);
 		assertEquals(scenarioServiceImpl.load("42"), null);
@@ -59,8 +66,14 @@ public class ScenarioServiceImplTest {
 	@Test
 	public void testLaunchExistingScenario() throws DAOException, JMSException {
 		Scenario s = new Scenario();
+		Flow flow = new Flow();
+		flow.setStart(0);
+		flow.setStop(1);
+		List<Flow> flows = new ArrayList<Flow>();
+		flows.add(flow);
 		s.setFlows(new ArrayList<Flow>());
 		when(scenarioDAOMock.load("42")).thenReturn(s);
+		when(jmsUtilsMock.receive()).thenReturn("{\"messageResult\" : {\"id\": 1, \"time\":2}}");
 		scenarioServiceImpl.launch("42");
 	}
 	

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.activemq.protobuf.compiler.parser.ProtoParserTokenManager;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -195,7 +194,7 @@ public class ElasticsearchUtils {
 
 			// save bulk result units later (for kibana graphs)
 			BulkRequestBuilder requestBuilder = esClient.prepareBulk();
-			System.out.println(result.getResult());
+			if (result.getResult() == null) return indexResponse;
 			for (Object o: result.getResult()) {
 
 				@SuppressWarnings("unchecked")

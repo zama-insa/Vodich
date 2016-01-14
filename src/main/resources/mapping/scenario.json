@@ -9,7 +9,7 @@
 		"createdAt":
 		{
 			"type": "date",
-			"format": "dateOptionalTime",
+			"format": "epoch_millis",
 			"index" : "not_analyzed"
 		},
 		"flows":

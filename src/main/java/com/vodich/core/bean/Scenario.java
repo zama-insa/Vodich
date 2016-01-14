@@ -40,7 +40,10 @@ public class Scenario {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	@Override
+	public boolean equals(Object obj) {
+		return this.hashCode() == obj.hashCode();
+	}
 
 	@Override
 	public int hashCode() {
@@ -55,4 +58,5 @@ public class Scenario {
 	public String toString() {
 		return "[Scenario id=" + id + "; name=" + name + ";createdAt=" + createdAt + ";flows=" + flows + "]";
 	}
+
 }
