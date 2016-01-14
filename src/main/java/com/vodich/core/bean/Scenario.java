@@ -3,7 +3,7 @@ package com.vodich.core.bean;
 import java.util.Date;
 import java.util.List;
 
-public class Scenario {
+public class Scenario extends AbstractVodichBean {
 	private String id;
 	private String name;
 	private Date createdAt;
@@ -39,19 +39,6 @@ public class Scenario {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		return this.hashCode() == obj.hashCode();
-	}
-
-	@Override
-	public int hashCode() {
-		int result = 2;
-		int c = (id != null ? id.hashCode() : 0)
-		+ (createdAt != null ? createdAt.hashCode() : 0)
-		+ (flows != null ? flows.hashCode() : 0);
-		return 37 * result + c;
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public class ResultServiceImpl implements ResultService {
 		return resultDAO.load(id);
 	}
 
-	private ResultServiceImpl(ResultDAO resultDAO) {
+	ResultServiceImpl(ResultDAO resultDAO) {
 		this.resultDAO = resultDAO;
 	}
 	private static ResultService instance;

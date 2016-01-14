@@ -3,7 +3,7 @@ package com.vodich.core.bean;
 import java.util.Date;
 import java.util.List;
 
-public class Result {
+public class Result extends AbstractVodichBean {
 	private String id;
 	private String scenarioId;
 	private Date launchTime;
@@ -38,5 +38,11 @@ public class Result {
 	}
 	public void setResult(List<Object> result) {
 		this.result = result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Result that = (Result) obj;
+		return this.id == that.id;
 	}
 }

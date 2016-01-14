@@ -1,6 +1,6 @@
 package com.vodich.core.bean;
 
-public class Flow {
+public class Flow extends AbstractVodichBean {
 	private String consumer;
 	private String producer;
 	private double frequency;
