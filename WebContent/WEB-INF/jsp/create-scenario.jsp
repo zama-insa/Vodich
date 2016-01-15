@@ -101,19 +101,23 @@
 					  	</div>
 					  	<div class="form-group">
 						  <label for="processtime${i}"><fmt:message key="message_processtime" /></label>
-						  <input class="form-control" id="processtime${i}" name="processtime${i}" placeholder=<fmt:message key="message_producerprocessingtime" /> value="${map.processtime[i-1]}"/>
+						  <input class="form-control" id="processtime${i}" name="processtime${i}" placeholder="<fmt:message key='message_producerprocessingtime' />" value="${map.processtime[i-1]}"/>
 					  	</div>
 					  	<div class="form-group">
 						  <label for="frequency${i}"><fmt:message key="message_frequency" /></label>
-						  <input class="form-control" id="frequency${i}" name="frequency${i}" placeholder= <fmt:message key="message_sendingfrequencyofconsumer" /> value="${map.frequency[i-1]}"/>
+						  <input class="form-control" id="frequency${i}" name="frequency${i}" placeholder="<fmt:message key="message_sendingfrequencyofconsumer" />" value="${map.frequency[i-1]}"/>
 					  	</div>
 					  	<div class="form-group">
 						  <label for="starttime${i}"><fmt:message key="message_startsat" /></label>
-						  <input class="form-control" id="starttime${i}" name="starttime${i}" placeholder=<fmt:message key="message_relativetimestart" /> value="${map.starttime[i-1]}"/>
+						  <input class="form-control" id="starttime${i}" name="starttime${i}" placeholder="<fmt:message key='message_relativetimestart' />" value="${map.starttime[i-1]}"/>
 					  	</div>
 					  	<div class="form-group">
 						  <label for="stoptime${i}"><fmt:message key="message_endsat" /></label>
-						  <input class="form-control" id="stoptime${i}" name="stoptime${i}" placeholder=<fmt:message key="message_relativetimestop" /> value="${map.stoptime[i-1]}"/>
+						  <input class="form-control" id="stoptime${i}" name="stoptime${i}" placeholder="<fmt:message key="message_relativetimestop" />" value="${map.stoptime[i-1]}"/>
+					  	</div>
+					  	<div class="form-group">
+						  <label for="msgload${i}"><fmt:message key="message_messageload" /></label>
+						  <input class="form-control" id="msgload${i}" name="msgload${i}" placeholder="<fmt:message key="message_placeholder_messageload" />" value="${map.msgload[i-1]}"/>
 					  	</div>
 					</div>
 					<button class="btn btn-primary" type=submit><fmt:message key="message_create" /></button>

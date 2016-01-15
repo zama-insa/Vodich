@@ -12,7 +12,7 @@ KibanaUtils.prototype.lineChartIframe = function(rid, width, height) {
 			"schema:segment,type:terms)),listeners:()," +
 			"params:(addLegend:!f,addTimeMarker:!f,addTooltip:!f,defaultYExtents:!f," +
 			"drawLinesBetweenPoints:!t,interpolate:linear,radiusRatio:9,scale:linear," +
-			"setYExtents:!f,shareYAxis:!t,showCircles:!t,smoothLines:!t,times:!(),yAxis:()),type:line))\"" +
+			"setYExtents:!f,shareYAxis:!t,showCircles:!t,smoothLines:!f,times:!(),yAxis:()),type:line))\"" +
 			" height=\"" + height + "\" width=\"" + width + "\">" +
 			"</iframe>";
 }

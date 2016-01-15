@@ -8,12 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.elasticsearch.bootstrap.Elasticsearch;
-
 import com.vodich.business.ScenarioService;
 import com.vodich.business.ScenarioServiceImpl;
-import com.vodich.core.bean.Scenario;
-import com.vodich.dao.ElasticsearchUtils;
 import com.vodich.core.util.WebUtils;
 
 /**

@@ -48,6 +48,16 @@ public class ScenarioServiceImplTest {
 	@Test
 	public void testSaveScenario() throws DAOException {
 		Scenario s = new Scenario();
+		Flow flow = new Flow();
+		flow.setStart(0);
+		flow.setStop(1);
+		flow.setMessageLoad(2);
+		flow.setFrequency(3);
+		flow.setProducer("1");
+		flow.setConsumer("3");
+		List<Flow> flows = new ArrayList<Flow>();
+		flows.add(flow);
+		s.setFlows(new ArrayList<Flow>());
 		scenarioServiceImpl.save(s);
 	}
 	

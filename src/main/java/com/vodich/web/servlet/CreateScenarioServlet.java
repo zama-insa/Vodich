@@ -1,10 +1,7 @@
 package com.vodich.web.servlet;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,17 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.vodich.business.CommonService;
 import com.vodich.business.CommonServiceImpl;
 import com.vodich.business.ScenarioService;
 import com.vodich.business.ScenarioServiceImpl;
 import com.vodich.core.bean.Flow;
 import com.vodich.core.bean.Scenario;
 import com.vodich.core.util.VodichUtils;
-import com.vodich.dao.DAOException;
-import com.vodich.dao.ScenarioDAO;
-import com.vodich.dao.ScenarioDAOImpl;
 import com.vodich.core.util.WebUtils;
+import com.vodich.dao.DAOException;
 
 /**
  * Servlet implementation class CreateScenarioServlet
@@ -39,7 +33,8 @@ public class CreateScenarioServlet extends HttpServlet {
 	private static final String PARAM_PROCESS_TIME = "processtime";
 	private static final String PARAM_PRODUCER = "producer";
 	private static final String PARAM_CONSUMER = "consumer";
-
+	private static final String PARAM_MESSAGE_LOAD = "msgload";
+	
 	private static final String ATT_ERROR_MSG = "error";
 	private static final String ATT_FLOW_COUNT = "flowcount";
 	// attribute that enables parameters saving
@@ -135,6 +130,7 @@ public class CreateScenarioServlet extends HttpServlet {
 				flow.setFrequency(Double.parseDouble(request.getParameter(PARAM_FREQUENCY + i)));
 				flow.setStart(Integer.parseInt(request.getParameter(PARAM_START_TIME + i)));
 				flow.setStop(Integer.parseInt(request.getParameter(PARAM_STOP_TIME + i)));
+				flow.setMessageLoad(Integer.parseInt(request.getParameter(PARAM_MESSAGE_LOAD + i)));
 			} catch (NumberFormatException|NullPointerException e) {
 				request.setAttribute(ATT_ERROR_MSG, "Empty or invalid format on Flow" + i + ": " + e.getMessage());
 				WebUtils.forward(request, response, "create-scenario.jsp");
@@ -171,6 +167,7 @@ public class CreateScenarioServlet extends HttpServlet {
 		map.put(PARAM_FREQUENCY, new ArrayList<Object>());
 		map.put(PARAM_START_TIME, new ArrayList<Object>());
 		map.put(PARAM_STOP_TIME, new ArrayList<Object>());
+		map.put(PARAM_MESSAGE_LOAD, new ArrayList<Object>());
 		for (int i = 1; i <= flowCount; i++){
 			map.get(PARAM_CONSUMER).add(request.getParameter(PARAM_CONSUMER + i));
 			map.get(PARAM_PRODUCER).add(request.getParameter(PARAM_PRODUCER + i));
@@ -178,6 +175,7 @@ public class CreateScenarioServlet extends HttpServlet {
 			map.get(PARAM_FREQUENCY).add(request.getParameter(PARAM_FREQUENCY + i));
 			map.get(PARAM_START_TIME).add(request.getParameter(PARAM_START_TIME + i));
 			map.get(PARAM_STOP_TIME).add(request.getParameter(PARAM_STOP_TIME + i));
+			map.get(PARAM_MESSAGE_LOAD).add(request.getParameter(PARAM_MESSAGE_LOAD + i));
 		}
 		request.getSession().setAttribute(ATT_MAP, map);
 	}
