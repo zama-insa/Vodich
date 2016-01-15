@@ -35,7 +35,7 @@ public class ChangeLangageServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
 	    Locale locale = (Locale) Config.get(session, Config.FMT_LOCALE);
-		System.out.println("Parametre langage recu : "+request.getParameter("language"));
+		//System.out.println("Parametre langage recu : "+request.getParameter("language"));
 	    if ( request.getParameter("language") != null) {
 	    	locale = new Locale(request.getParameter("language"));
 	     }
