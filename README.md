@@ -9,13 +9,13 @@ ESB Qualification Scenario Launcher
 #### Application dependencies:
 
 * [apache-activemq-5.13.0](http://activemq.apache.org/activemq-5130-release.html)
-* [ultraesb-2.3.0) (take our customized version, it's better!](https://github.com/zama-insa/ultraesb-2.3.0)
-* (kibana-4.2.2)(https://www.elastic.co/downloads/past-releases/kibana-4-2.2)
+* [ultraesb-2.3.0](https://github.com/zama-insa/ultraesb-2.3.0) (take our customized version, it's better!)
+* [kibana-4.2.2](https://www.elastic.co/downloads/past-releases/kibana-4-2.2)
 
 ## Launch the app
 
 * Launch ActiveMQ: `[activemq_folder]/bin/activemq start` 
-  - Verify that the activemq process actually exists. The web console is available at http://localhost:8161/admin/
+  - Verify that the activemq process actually exists. The web console is available at [http://localhost:8161](http://localhost:8161/admin/)
 * Launch UltraESB: `[ultraesb-folder]/bin/ultraesb.sh` 
 * Launch Kibana: `[kibana-folder]/bin/kibana.sh` 
 * Finally, Launch Tomcat server. For both Vodich and Producer.
