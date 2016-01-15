@@ -1,6 +1,7 @@
 package com.vodich.core.util;
 
 import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
 import javax.jms.ConnectionFactory;
@@ -20,6 +21,37 @@ public class JMSUtils {
 	private Session session;
 	private MessageConsumer msgConsumer;
 	private MessageProducer[] msgProducer= new MessageProducer[VodichUtils.NB_CONSUMER];
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	public MessageConsumer getMsgConsumer() {
+		return msgConsumer;
+	}
+
+	public void setMsgConsumer(MessageConsumer msgConsumer) {
+		this.msgConsumer = msgConsumer;
+	}
+
+	public MessageProducer[] getMsgProducer() {
+		return msgProducer;
+	}
+
+	public void setMsgProducer(MessageProducer[] msgProducer) {
+		this.msgProducer = msgProducer;
+	}
+
+	public Topic[] getTopics() {
+		return topics;
+	}
+
+	public void setTopics(Topic[] topics) {
+		this.topics = topics;
+	}
 	private Topic[] topics;
 	
 	private JMSUtils(ConnectionFactory connectionFactory, Queue queue, Topic[] topics) throws IOException {
@@ -70,8 +102,15 @@ public class JMSUtils {
 	 * @throws JMSException 
 	 */
 	public String receive(long timeout) throws JMSException {
-		TextMessage textMessage = (TextMessage) msgConsumer.receive(timeout);
-		return textMessage.getText();
+			try{
+				TextMessage textMessage = (TextMessage) msgConsumer.receive(timeout);
+				return textMessage.getText();
+
+			}catch(java.lang.NullPointerException e){
+				return "";
+			}
+		
+		
 	}
 	
 	/**

@@ -33,7 +33,6 @@
     </div>
     <div id="<c:out value="${scenario.id}"/>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<c:out value="${scenario.id}"/>">
       <div class="panel-body">
-      <p>Scenario ID : ${scenario.id }</p>
       <p>Scenario name : ${scenario.name }</p>
       <c:forEach items="${scenario.flows }" var="flow">
       	<p>Consumer : ${flow.consumer }</p>

@@ -11,4 +11,4 @@
     <div class="col-md-1"> <button class="btn btn-primary" type=button onclick="location.href='create'"><fmt:message key="message_creation" /> </button></div>
     <div class="col-md-1"> <button class="btn btn-primary" type=button onclick="location.href='import'"> <fmt:message key="message_importt" /> </button></div>
    </div>
-</div>
+ </div>

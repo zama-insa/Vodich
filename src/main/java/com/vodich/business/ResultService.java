@@ -1,5 +1,7 @@
 package com.vodich.business;
 
+import com.vodich.core.bean.Result;
+
 public interface ResultService {
-	public void receive();
+	public Result load(String id);
 }
