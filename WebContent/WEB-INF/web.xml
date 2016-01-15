@@ -8,12 +8,16 @@
     </jsp-property-group>
   </jsp-config>
   <message-destination-ref>
-      <message-destination-ref-name>jms/myQueue</message-destination-ref-name>
-      <message-destination-type>javax.jms.Queue</message-destination-type>
-      <message-destination-usage>ConsumesProduces</message-destination-usage>
-      <message-destination-link>MyQueue</message-destination-link>
+    <message-destination-ref-name>jms/myQueue</message-destination-ref-name>
+    <message-destination-type>javax.jms.Queue</message-destination-type>
+    <message-destination-usage>ConsumesProduces</message-destination-usage>
+    <message-destination-link>MyQueue</message-destination-link>
   </message-destination-ref>
   <message-destination>
-      <message-destination-name>MyQueue</message-destination-name>
+    <message-destination-name>MyQueue</message-destination-name>
   </message-destination>
+  <context-param>
+    <param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
+    <param-value>de</param-value>
+  </context-param>
 </web-app>

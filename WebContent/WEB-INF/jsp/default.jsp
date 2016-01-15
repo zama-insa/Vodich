@@ -1,11 +1,5 @@
 <t:baseLayout>
-<br>
-<br>
-
 <div class="container">
-<div class="row">
-<button class="btn btn-primary" type=button onclick="location.href='create'">Create New Scenario</button>
-</div>
 <br>
   <div class="row">
 	<div class="col-md-10">
@@ -30,10 +24,10 @@
       </h4>
 	</div>
 	<div class="col-xs-6 col-sm-3">
-	<button class="btn btn-primary" type="button" onclick="location.href='launch?id=<c:out value="${scenario.id}'"/>">Launch</button>
+	<button class="btn btn-primary" type="button" onclick="location.href='launch?id=<c:out value="${scenario.id}'"/>"><fmt:message key="message_launch" /></button>
 	</div>
 	<div class="col-xs-6 col-sm-3">
-	<button class="btn btn-primary" type="button" onclick="location.href='delete?id=<c:out value="${scenario.id}'"/>">Delete</button>
+	<button class="btn btn-primary" type="button" onclick="location.href='delete?id=<c:out value="${scenario.id}'"/>"><fmt:message key="message_delete" /></button>
 	</div>
     </div>
     </div>
@@ -56,7 +50,6 @@
   </div>
   </div>
 </div>
-
 </div>
 
   
