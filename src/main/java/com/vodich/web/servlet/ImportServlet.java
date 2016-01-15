@@ -168,7 +168,10 @@ public class ImportServlet extends HttpServlet {
 																	// <input
 																	// type="text"
 																	// name="description">
-		Part filePart = request.getPart("file"); // Retrieves <input type="file"
+		//System.out.println("Description"+description);
+		String contentType = request.getContentType();
+		//System.out.println("ContentType"+contentType);
+		Part filePart = request.getPart("file"); // Retrieves <input type="file" 
 													// name="file">
 		String fileName = filePart.getSubmittedFileName();
 		InputStream fileContent = filePart.getInputStream();
@@ -176,14 +179,14 @@ public class ImportServlet extends HttpServlet {
 		
 		if (VodichUtils.isNullOrEmpty(scenario.getName())) {
 			request.setAttribute(ATT_ERROR_MSG, "The scenario name is not specified");
-			WebUtils.forward(request, response, "import.jsp");
+			WebUtils.forward(request, response, "default.jsp");
 			return;
 		}
 		
 		try {
 			if (scenarioService.loadByName(scenario.getName()) != null) {
 				request.setAttribute(ATT_ERROR_MSG, "Scenario name '" + scenario.getName()+ "' already exists");
-				WebUtils.forward(request, response, "import.jsp");
+				WebUtils.forward(request, response, "default.jsp");
 				return;
 			}
 		} catch (DAOException e) {

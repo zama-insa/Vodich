@@ -32,6 +32,7 @@ public class DefaultPageServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+    
     @Override
 	public void init() throws ServletException {
 		scenarioService = ScenarioServiceImpl.getInstance();
@@ -42,7 +43,6 @@ public class DefaultPageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		request.getSession().setAttribute("scenarii",scenarioService.loadAll());
 		WebUtils.forward(request, response, "default.jsp");
 		//response.getWriter().append("Served at: "+a).append(request.getContextPath());

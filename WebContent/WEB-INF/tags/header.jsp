@@ -1,11 +1,14 @@
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title>Vodich</title>
-    <link href="res/css/main.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <link href="res/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="res/lib/font-awesome-4.5.0/css/font-awesome.min.css" rel ="stylesheet"/>
-	<script src="switchlang.js"></script>
-	
-</head>
+<div class="container-fluid">
+  <div class="row">
+  <div class="col-md-2"><button type="button"  onclick="location.href='default'" class="btn btn-default" aria-label="Left Align">
+  <img src="res/img/zama.png" class="images_petit"  >
+</button>
+</div>
+    <div class="col-md-1"><a href="accessibility"> <fmt:message key="message_gettingStarted"/> </a></div>
+    <div class="col-md-1" ><a href="default"> <fmt:message key="message_scenarii"/> </a> </div>
+    <div class="col-md-1"><a href="contact"> Contact</a></div>
+    <div class="col-md-1"><a href="contact"> <fmt:message key="message_results"/></a></div>
+    <div class="col-md-1"> <button class="btn btn-primary" type=button onclick="location.href='create'"><fmt:message key="message_creation" /> </button></div>
+    <div class="col-md-1"> <button class="btn btn-primary" type=button onclick="location.href='import'"> <fmt:message key="message_importt" /> </button></div>
+   </div>
+</div>

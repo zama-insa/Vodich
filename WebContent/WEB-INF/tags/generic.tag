@@ -1,6 +1,7 @@
 <%@tag description= "Just a default generic tag, useful to create layouts"
 	   language="java"
        pageEncoding="UTF-8"%>
+<%@attribute name="head" fragment="true" %>
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="messagePanel" fragment="true" %>
 <%@attribute name="body" fragment="true" %>
@@ -10,11 +11,10 @@
 
 
 <html lang="${language}">
-      <jsp:invoke fragment="header"/>
+      <jsp:invoke fragment="head"/>
+      
       <script src="res/js/script.js"></script>
   <body>
-  
-
         <form id="frmUser">
         <span class="label label-default"> Language :</span>
                 <input class="btn btn-secondary" type="button" id="btnSubmitFrench" value="French" />
@@ -22,12 +22,9 @@
                 <br />
                 <br />
         </form>
-
-  	
-    <div id="header">
+        
+        <jsp:invoke fragment="header"/>	
  
-	
-    </div>
 <div class="page-wrap">
     <div id="body">
       <jsp:invoke fragment="body"/>
