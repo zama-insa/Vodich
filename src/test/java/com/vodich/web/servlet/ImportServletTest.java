@@ -1,6 +1,6 @@
 package com.vodich.web.servlet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
 import javax.servlet.http.HttpServletRequest;
