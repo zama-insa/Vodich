@@ -7,6 +7,7 @@
 			<h2><a href="create"><fmt:message key="message_contact" /></a></h2>
 			</div>
 		</div>
+</div>
 <div class="container">
 <div class="row">
 			<div class="col-md-12">
@@ -26,5 +27,5 @@
     <div class="panel-body">Zakaria Aziouiz aziouiz@etud.insa-toulouse.fr</div>
   </div>
  
-
+</div>
 </t:baseLayout>

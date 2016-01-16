@@ -1,5 +1,5 @@
 <t:baseLayout>
-<main>
+<div class="container">
   <h1>Web Browsers</h1>
   <p>Google Chrome, Firefox, and Internet Explorer are the most used browsers today.</p>
 
@@ -17,6 +17,6 @@
     <h1>Mozilla Firefox</h1>
     <p>Firefox is a free, open-source web browser from Mozilla, released in 2004.</p>
   </article>
-</main>
+</div>
 </t:baseLayout>
 

@@ -9,5 +9,4 @@
 	<script src="switchlang.js"></script>
 	 <script src="res/lib/jquery.min-2.1.1.js"></script>
      <script src="res/lib/progressBar/progressbar.min.js"></script>
-	
 </head>

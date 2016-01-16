@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Dosis);
 * {
 	margin: 0;
 }
@@ -6,6 +8,10 @@ iframe {
 }
 html, body {
   height: 100%;
+  font-family: 'Roboto', sans-serif !important;
+}
+h1, h2, h3, h4, h5, h6, p, div, a {
+	font-family: 'Roboto', sans-serif;
 }
 .page-wrap {
 	min-height: 100%;
@@ -28,4 +34,41 @@ height:80px;
 }
 #Zamapng {
     text-align: left;
+}
+#frmUser {
+	float: right;
+}
+#header {
+	margin-bottom: 62px;
+}
+#nav-bar-container {
+	margin-top: 25px;
+}
+#nav-bar, #nav-button-panel {
+	float: none;
+	display: table-cell;
+	vertical-align: bottom;
+}
+#nav-bar {
+	color: #298eea;
+	font-size: 25px;
+}
+
+#nav-import-btn {
+	margin-top: 6px;
+}
+.nav-bar-item {
+	display: inline-block;
+	margin-right: 30px;
+}
+
+.nav-bar-item a {
+	color: #298eea;
+	font-family: 'Dosis', sans-serif;
+	font-size: 25px;
+}
+.nav-bar-item a:hover {
+	text-decoration: none;
+	font-weight: bold;
+	color: #298eea;
 }
