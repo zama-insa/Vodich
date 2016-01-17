@@ -1,6 +1,7 @@
 package com.vodich.web.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.vodich.business.ResultService;
 import com.vodich.business.ResultServiceImpl;
-import com.vodich.business.ScenarioServiceImpl;
 import com.vodich.core.bean.Result;
 import com.vodich.core.util.VodichUtils;
 import com.vodich.core.util.WebUtils;
@@ -24,6 +24,8 @@ public class ResultServlet extends HttpServlet {
 	private static final String PARAM_RESULT_ID = "rid";
 	private static final String ATT_ERROR_MSG = "error";
 	private static final String ATT_RESULT_ID = PARAM_RESULT_ID;
+	private static final String ATT_RESULT_LIST = "resultList";
+	private static final String ATT_LIST_VIEW_MODE = "listView";
 	private ResultService resultService;
        
    @Override
@@ -35,8 +37,11 @@ public class ResultServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String resultId = request.getParameter(PARAM_RESULT_ID);
+		System.out.println("yaya" + resultId + VodichUtils.isNullOrEmpty(resultId));
 		if (VodichUtils.isNullOrEmpty(resultId)) {
-			request.setAttribute(ATT_ERROR_MSG, "Missing required parameter : 'rid'");
+			request.setAttribute(ATT_LIST_VIEW_MODE, true);
+			request.setAttribute(ATT_RESULT_LIST, resultService.loadAll());
+			System.out.println("yoyo");
 			WebUtils.forward(request, response, "result.jsp");
 			return;
 		} 

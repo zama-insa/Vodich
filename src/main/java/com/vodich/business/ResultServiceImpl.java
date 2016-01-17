@@ -1,5 +1,7 @@
 package com.vodich.business;
 
+import java.util.List;
+
 import com.vodich.core.bean.Result;
 import com.vodich.dao.ResultDAO;
 import com.vodich.dao.ResultDAOImpl;
@@ -21,5 +23,10 @@ public class ResultServiceImpl implements ResultService {
 			instance = new ResultServiceImpl(ResultDAOImpl.getInstance());
 		}
 		return instance;
+	}
+
+	@Override
+	public List<Result> loadAll() {
+		return resultDAO.loadAll();
 	}
 }

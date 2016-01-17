@@ -142,4 +142,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>http://46.101.112.94:8080/job/VodichJob/</url>
+	</ciManagement>
 </project>

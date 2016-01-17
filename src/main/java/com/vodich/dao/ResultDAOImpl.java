@@ -1,5 +1,7 @@
 package com.vodich.dao;
 
+import java.util.List;
+
 import com.vodich.core.bean.Result;
 
 public class ResultDAOImpl implements ResultDAO {
@@ -11,8 +13,12 @@ public class ResultDAOImpl implements ResultDAO {
 
 	@Override
 	public Result load(String resultId) {
-		// TODO Auto-generated method stub
 		return ElasticsearchUtils.loadScenarioResult(resultId);
+	}
+
+	@Override
+	public List<Result> loadAll() {
+		return ElasticsearchUtils.loadAllScenarioResults();
 	}
 
 	private ResultDAOImpl() {}

@@ -34,7 +34,7 @@ import com.vodich.core.bean.Scenario;
 import com.vodich.core.util.VodichUtils;
 
 public class ElasticsearchUtils {
-	
+
 	private static Client esClient;
 	private static ObjectMapper mapper;
 	private static Properties properties;
@@ -68,7 +68,7 @@ public class ElasticsearchUtils {
 		}
 		try {
 			esClient.admin().indices().preparePutMapping("vodich").setType("scenario").setSource(vodichMapping)
-					.execute().actionGet();
+			.execute().actionGet();
 		} catch (Throwable e) {
 			e.printStackTrace();
 			return;
@@ -172,7 +172,9 @@ public class ElasticsearchUtils {
 				.execute()
 				.actionGet();
 		try {
-
+			if (!response.isExists()) {
+				return null;
+			}
 			result = mapper.readValue(response.getSourceAsBytes(), Result.class);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -184,9 +186,33 @@ public class ElasticsearchUtils {
 	}
 
 
+	public static List<Result> loadAllScenarioResults() {
+		
+		List<Result> listResults = new ArrayList<>();
+
+		// Query to search in ES
+		SearchResponse response = esClient.prepareSearch("vodich").setTypes("result").execute().actionGet();
+
+		// Serialize to Scenario
+		for (SearchHit hit : response.getHits()) {
+			Result result;
+			try {
+				result = mapper.readValue(hit.getSourceAsString(), Result.class);
+				result.setId(hit.getId());
+				listResults.add(result);
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return listResults;
+	}
+
+
 	public static IndexResponse saveScenarioResult(Result result) {
 		try {
-			
+
 
 			// save result first
 			byte[] resultJson = mapper.writeValueAsBytes(result);

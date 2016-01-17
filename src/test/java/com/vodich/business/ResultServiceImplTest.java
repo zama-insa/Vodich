@@ -1,11 +1,13 @@
 package com.vodich.business;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,5 +47,14 @@ public class ResultServiceImplTest {
 	public void loadResultNotFoundTest() {
 		when(resultDAOMock.load("123")).thenReturn(null);
 		assertNull(service.load("123"));
+	}
+	
+	@Test
+	public void loadAllTest() {
+		List<Result> mockList = new ArrayList<>();
+		mockList.add(new Result());
+		mockList.add(new Result());
+		when(resultDAOMock.loadAll()).thenReturn(mockList);
+		assertEquals(2, mockList.size());
 	}
 }
