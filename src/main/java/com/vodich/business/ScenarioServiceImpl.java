@@ -1,16 +1,12 @@
 package com.vodich.business;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.jms.JMSException;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vodich.core.bean.Flow;
-import com.vodich.core.bean.Result;
 import com.vodich.core.bean.Scenario;
 import com.vodich.core.util.JMSUtils;
 import com.vodich.dao.DAOException;
@@ -47,28 +43,7 @@ public class ScenarioServiceImpl implements ScenarioService {
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		} finally {
-			jmsUtils.stopConnection();
 		}
-			
-		jmsUtils.startConnection();
-		String resultString = jmsUtils.receive();
-		
-		Map<String, Object> resultJson;
-		try {
-			resultJson = mapper.readValue(resultString, new TypeReference<Map<String, Object>>() {});
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		}
-		Result result = new Result();
-		result.setFinishTime(new Date());
-		result.setScenarioId(scenarioId);
-		result.setResult((List<Object>) resultJson.get("messageResults"));
-		resultDAO.save(result);
-		jmsUtils.stopConnection();
-			
-		
 	}
 	
 	
@@ -89,12 +64,7 @@ public class ScenarioServiceImpl implements ScenarioService {
 
 	public static ScenarioService getInstance() {
 		if (instance == null) {
-			try {
-				instance = new ScenarioServiceImpl(ScenarioDAOImpl.getInstance(), ResultDAOImpl.getInstance(), JMSUtils.getInstance());
-			} catch (IOException e) {
-				e.printStackTrace();
-				return null;
-			}
+			instance = new ScenarioServiceImpl(ScenarioDAOImpl.getInstance(), ResultDAOImpl.getInstance(), JMSUtils.getInstance());
 		}
 		return instance;
 	}

@@ -1,15 +1,12 @@
 package com.vodich.core.util;
 
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
-import javax.annotation.Resource;
+import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
-import javax.jms.Connection;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -129,9 +126,9 @@ public class JMSUtils {
 		instance = new JMSUtils(connectionFactory, queue, topics);
 	}
 	private static JMSUtils instance;
-	public static JMSUtils getInstance() throws IOException {
+	public static JMSUtils getInstance() {
 		if (instance == null) 
-			throw new IOException("Creation error: static init() method must be called before");
+			throw new RuntimeException("Creation error: static init() method must be called before");
 		return instance;
 		
 	}

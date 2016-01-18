@@ -1,0 +1,21 @@
+.progress {
+	height: 300px;
+	background: inherit;
+	box-shadow: none;
+}
+
+.progress>svg {
+	height: 100%;
+	margin-left: auto;
+	margin-righ: auto;
+	width: 100%;
+}
+
+.progressbar-text {
+	font-weight: bold !important;
+	font-size: xx-large !important;
+}
+
+#audio {
+	display: none;
+}

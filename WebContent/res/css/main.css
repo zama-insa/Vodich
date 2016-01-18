@@ -72,3 +72,6 @@ height:80px;
 	font-weight: bold;
 	color: #298eea;
 }
+.hidden {
+	display:none;
+}

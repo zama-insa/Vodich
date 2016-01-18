@@ -37,11 +37,9 @@ public class ResultServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String resultId = request.getParameter(PARAM_RESULT_ID);
-		System.out.println("yaya" + resultId + VodichUtils.isNullOrEmpty(resultId));
 		if (VodichUtils.isNullOrEmpty(resultId)) {
 			request.setAttribute(ATT_LIST_VIEW_MODE, true);
 			request.setAttribute(ATT_RESULT_LIST, resultService.loadAll());
-			System.out.println("yoyo");
 			WebUtils.forward(request, response, "result.jsp");
 			return;
 		} 
@@ -52,7 +50,6 @@ public class ResultServlet extends HttpServlet {
 			WebUtils.forward(request, response, "result.jsp");
 			return;
 		}
-		
 		request.setAttribute(ATT_RESULT_ID, resultId);
 		WebUtils.forward(request, response, "result.jsp");
 	}

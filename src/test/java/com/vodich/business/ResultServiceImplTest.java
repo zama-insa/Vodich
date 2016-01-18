@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.vodich.core.bean.Result;
+import com.vodich.core.util.JMSUtils;
 import com.vodich.dao.ResultDAO;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,11 +25,14 @@ public class ResultServiceImplTest {
 	@Mock
 	ResultDAO resultDAOMock;
 	
+	@Mock
+	JMSUtils jmsUtilsMock;
+	
 	private ResultServiceImpl service;
 	
 	@Before
 	public void setUp() {
-		service = new ResultServiceImpl(resultDAOMock);
+		service = new ResultServiceImpl(resultDAOMock, jmsUtilsMock);
 	}
 	
 	@Test

@@ -7,8 +7,8 @@ import com.vodich.core.bean.Result;
 public class ResultDAOImpl implements ResultDAO {
 
 	@Override
-	public void save(Result result) {
-		ElasticsearchUtils.saveScenarioResult(result);
+	public String save(Result result) {
+		return ElasticsearchUtils.saveScenarioResult(result).getId();
 	}
 
 	@Override

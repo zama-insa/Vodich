@@ -39,11 +39,6 @@
 			<div class="col-md-3" id="datalost"></div>	
 		</div>
 		<br/>
-		<div class="row">
-			<div class="col-md-5">
-				<p><a href="default"><i class="fa fa-arrow-left"></i> Default page</a>
-			</div>
-		</div>
 		<script src="res/js/kibana-utils.js"></script>
 		<script>
 		var kibana = new KibanaUtils();

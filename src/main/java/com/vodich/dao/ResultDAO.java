@@ -6,7 +6,7 @@ import com.vodich.core.bean.Result;
 
 public interface ResultDAO {
 
-	public void save(Result result);
+	public String save(Result result);
 	
 	public Result load(String resultId);
 	
