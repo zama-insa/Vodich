@@ -1,29 +1,33 @@
 package com.vodich.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.elasticsearch.action.index.IndexResponse;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.vodich.core.bean.Result;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(ElasticsearchUtils.class)
 public class ResultDAOImplTest {
 	
-	private static ResultDAO rdao;
-	private static Result res;
-	 
-	@BeforeClass
-	public static void setUp() throws IOException {
-		rdao = ResultDAOImpl.getInstance();
-		FileUtils.deleteDirectory(new File(ElasticsearchUtils.getProperties().getProperty("dataPath")));
-		ElasticsearchUtils.init();
+	private static ResultDAO resultDAO = ResultDAOImpl.getInstance();
+	private Result res;
+	
+	
+	@Before
+	public void setUpMethod() {
+		PowerMockito.mockStatic(ElasticsearchUtils.class);
 		res = new Result();
 		res.setId("34");
 		Date date = new Date();
@@ -32,24 +36,27 @@ public class ResultDAOImplTest {
 		res.setScenarioId("453");
 	}
 	
-	@AfterClass
-	public static void close(){
-		ElasticsearchUtils.close();
-	}
-	
 	@Test
-	public void saveTest() {
-		// TODO Auto-generated method stub
-		IndexResponse a = ElasticsearchUtils.saveScenarioResult(res);
-		}
+	public void saveResultTest() {
+		IndexResponse response = new IndexResponse();
+		when(ElasticsearchUtils.saveScenarioResult(res)).thenReturn(response);
+		assertEquals(resultDAO.save(res), response.getId());
+	}
 	
 	@Test
 	public void loadTest() {
-		// TODO Auto-generated method stub
-		Result a = ElasticsearchUtils.loadScenarioResult(res.getId());
-		assertNotNull(a);
+		when(ElasticsearchUtils.loadScenarioResult("42")).thenReturn(res);
+		assertEquals(resultDAO.load("42"), res);
 	}
-
+	
+	@Test
+	public void loadAllTest() {
+		List<Result> results = new ArrayList<>();
+		results.add(res);
+		results.add(res);
+		when(ElasticsearchUtils.loadAllScenarioResults()).thenReturn(results);
+		assertEquals(resultDAO.loadAll().size(), 2);
+	}
 	
 	
 

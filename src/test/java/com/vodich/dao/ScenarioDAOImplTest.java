@@ -1,71 +1,93 @@
 package com.vodich.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.bootstrap.Elasticsearch;
-import org.elasticsearch.client.Client;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vodich.core.bean.Scenario;
-import com.vodich.core.util.VodichUtils;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(ElasticsearchUtils.class)
 public class ScenarioDAOImplTest {
-	private static ScenarioDAO dao;
+	private static ScenarioDAO scenarioDAO = ScenarioDAOImpl.getInstance();
  
-	@BeforeClass
-	public static void setUp() throws IOException {
-		dao = ScenarioDAOImpl.getInstance();
-		FileUtils.deleteDirectory(new File(ElasticsearchUtils.getProperties().getProperty("dataPath")));
-		ElasticsearchUtils.init();
+	@Before
+	public void setUp() {
+		PowerMockito.mockStatic(ElasticsearchUtils.class);
 	}
 	
-	@AfterClass
-	public static void close(){
-		ElasticsearchUtils.close();
-	}
-
 	@Test(expected=DAOException.class)
 	public void saveTestScenarioNameNull() throws DAOException{
-		Scenario sc = new Scenario ();
-		dao.save(sc);	
+		Scenario sc = new Scenario();
+		scenarioDAO.save(sc);
 	}
+	
 	@Test(expected=DAOException.class)
 	public void saveTestScenarioNameEmptyl() throws DAOException{
 		Scenario sc = new Scenario ();
 		sc.setName("");
-		dao.save(sc);	
+		scenarioDAO.save(sc);	
 	}
 	
-	@Test
-	public void saveTestScenarioWithName(){
+	@SuppressWarnings("unchecked")
+	@Test(expected=DAOException.class)
+	public void saveTestScenarioWithNameSaveFailed() throws DAOException{
 		Scenario sc = new Scenario ();
-		sc.setName("test");	
-	}
-	
-	@Test
-	public void deleteNonExistingScenario() throws DAOException{
-		assertFalse(dao.delete("57GKIJH883"));	
-	}
-	
-	@Test
-	public void deleteExistingScenario() throws InterruptedException, DAOException{
-		Scenario sc = new Scenario();
 		sc.setName("test");
-		String scenarioId = ElasticsearchUtils.saveScenario(sc);
-		sc.setId(scenarioId);
-		Thread.sleep(2000);
-		assertTrue(dao.delete(sc.getId()));
+		when(ElasticsearchUtils.saveScenario(sc)).thenThrow(DAOException.class);
+		scenarioDAO.save(sc);
 	}
 	
-
+	@Test
+	public void saveTestScenarioWithNameSaveSucceded() throws DAOException{
+		Scenario sc = new Scenario ();
+		sc.setName("test");
+		scenarioDAO.save(sc);
+	}
+	
+	@Test
+	public void loadScenario() throws DAOException {
+		Scenario sc = new Scenario ();
+		sc.setName("yo");
+		when(ElasticsearchUtils.load("42")).thenReturn(sc);
+		assertEquals(scenarioDAO.load("42"), sc);
+	}
+	
+	@Test
+	public void loadScenarioByName() throws DAOException {
+		Scenario sc = new Scenario ();
+		sc.setName("yo");
+		when(ElasticsearchUtils.loadByName("42")).thenReturn(sc);
+		assertEquals(scenarioDAO.loadByName("42"), sc);
+	}
+	
+	@Test
+	public void loadAllTest() {
+		Scenario sc = new Scenario ();
+		sc.setName("yo");
+		List<Scenario> scenarii = new ArrayList<>();
+		scenarii.add(sc);
+		scenarii.add(sc);
+		when(ElasticsearchUtils.loadScenarii()).thenReturn(scenarii);
+		assertEquals(scenarioDAO.loadAll().size(), 2);
+	}
+	
+	@Test
+	public void deleteScenarioTest() throws DAOException{
+		DeleteResponse response = new DeleteResponse();
+		when(ElasticsearchUtils.deleteScenario("42")).thenReturn(response);
+		assertEquals(scenarioDAO.delete("42"), response.isFound());
+	}
+	
 	
 }
