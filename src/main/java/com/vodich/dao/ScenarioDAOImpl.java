@@ -33,7 +33,7 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 			DeleteResponse response = ElasticsearchUtils.deleteScenario(scenarioId);
 			return response.isFound();
 		} catch (Exception e) {
-			throw new DAOException("[DAO] Save scenario failed", e);
+			throw new DAOException("[DAO] Delete scenario failed", e);
 		}
 
 	}

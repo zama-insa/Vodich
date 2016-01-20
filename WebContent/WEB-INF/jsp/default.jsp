@@ -55,6 +55,13 @@
 												<fmt:message key="message_delete" />
 											</button>
 										</div>
+										<div class="col-xs-6 col-sm-3">
+											<button class="btn btn-primary" type="button" 
+											id="btnExport" onclick="location.href='export?id=<c:out value="${scenario.id}'"/>">
+											<fmt:message key="message_export"/></button>
+	                                        <input type="file" id="ctrl" webkitdirectory directory multiple/>
+										
+										</div>
 									</div>
 								</div>
 								<div id="<c:out value="${scenario.id}"/>"
@@ -82,3 +89,4 @@
 		</c:choose>
 	</div>
 </t:baseLayout>
+

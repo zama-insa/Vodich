@@ -46,8 +46,7 @@ public class ChangeLangageServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 	    
 	}
 	
@@ -66,20 +65,7 @@ public class ChangeLangageServlet extends HttpServlet {
 	     
 	}
 	
-	/*
-	 *  HttpSession session = request.getSession(true);
-     Locale locale = (Locale) Config.get(session, Config.FMT_LOCALE);
- 
-     if (locale == null) {
-         locale = request.getLocale();
-     }
-     if (request.getParameter("language") != null) {
-         locale = new Locale(request.getParameter("language"));
-     }
-     Config.set(session, Config.FMT_LOCALE, locale);
- 
-     return null;
-	 */
+	
 	
 
 }

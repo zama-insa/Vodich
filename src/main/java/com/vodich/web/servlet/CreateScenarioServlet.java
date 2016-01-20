@@ -79,7 +79,7 @@ public class CreateScenarioServlet extends HttpServlet {
 		}
 	}
 
-	private void actionRemoveFlow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	void actionRemoveFlow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int flowCount = Integer.parseInt(request.getParameter(ATT_FLOW_COUNT));
 		if (flowCount > 1) {
 			flowCount -= 1;
