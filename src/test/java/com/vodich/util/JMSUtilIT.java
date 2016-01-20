@@ -22,7 +22,7 @@ import com.vodich.core.util.JMSUtils;
 import com.vodich.core.util.VodichUtils;
 import com.vodich.dao.DAOException;
 
-public class JMSUtilTest {
+public class JMSUtilIT {
 
 	@Before
 	public void init(){

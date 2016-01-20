@@ -1,4 +1,4 @@
-package com.vodich.web.servlet.test;
+package com.vodich.web.servlet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

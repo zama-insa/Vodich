@@ -86,12 +86,7 @@ public class ScenarioServiceImpl implements ScenarioService {
 
 	public static ScenarioService getInstance() {
 		if (instance == null) {
-			try {
-				instance = new ScenarioServiceImpl(ScenarioDAOImpl.getInstance(), ResultDAOImpl.getInstance(), JMSUtils.getInstance());
-			} catch (IOException e) {
-				e.printStackTrace();
-				return null;
-			}
+			instance = new ScenarioServiceImpl(ScenarioDAOImpl.getInstance(), ResultDAOImpl.getInstance(), JMSUtils.getInstance());
 		}
 		return instance;
 	}

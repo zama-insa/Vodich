@@ -1,4 +1,4 @@
-package com.vodich.web.servlet.test;
+package com.vodich.web.servlet;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
