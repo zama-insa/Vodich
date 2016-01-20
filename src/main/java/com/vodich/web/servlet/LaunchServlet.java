@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vodich.business.ScenarioService;
 import com.vodich.business.ScenarioServiceImpl;
 import com.vodich.core.bean.Scenario;
@@ -52,12 +51,12 @@ public class LaunchServlet extends HttpServlet {
 			WebUtils.forward(request, response, "launch.jsp");
 
 		} catch (DAOException e1) {
-			// TODO Auto-generated catch block
+			e1.printStackTrace();
 			request.setAttribute(ATT_ERROR_MSG, "Database error : Load scenario failed");
 			WebUtils.forward(request, response, "launch.jsp");
 
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
 			request.setAttribute(ATT_ERROR_MSG, "JMS error : Launch Scenario failed");
 			WebUtils.forward(request, response, "launch.jsp");
 

@@ -7,6 +7,7 @@ public class Scenario extends AbstractVodichBean {
 	private String id;
 	private String name;
 	private Date createdAt;
+	private Integer totalLaunches;
 	private List<Flow> flows;
 
 	public String getId() {
@@ -44,6 +45,14 @@ public class Scenario extends AbstractVodichBean {
 	@Override
 	public String toString() {
 		return "[Scenario id=" + id + "; name=" + name + ";createdAt=" + createdAt + ";flows=" + flows + "]";
+	}
+
+	public Integer getTotalLaunches() {
+		return totalLaunches;
+	}
+
+	public void setTotalLaunches(Integer totalLaunches) {
+		this.totalLaunches = totalLaunches;
 	}
 
 }

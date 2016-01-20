@@ -2,15 +2,13 @@
 	<link href="res/css/launch.css" rel="stylesheet" />
 	<div class="container">
 		<div class="col-md-12">
-			<c:if test="${not empty error}">
-				<div class="alert alert-danger alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<strong>Error</strong><br /> ${error}
-				</div>
-			</c:if>
+			<div class="error-panel alert alert-danger alert-dismissible ${empty error ? 'hidden' : ''}" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>Error</strong><br /><span class="text">${error}</span>
+			</div>
 			<div class="progress" id="progress"></div>
 			<audio controls id="audio" src="res/audio/loup.mp3"></audio>
 			<div id="messagePanel" class="hidden">
@@ -24,6 +22,9 @@
 						<a id="visualization_link"><fmt:message key="message_launch_success_2" /></a>
 					</div>
 				</div>
+			</div>
+			<div>
+				<h3 id="launch-label"><blink>Launching..</blink></h3>
 			</div>
 		</div>
 	</div>
@@ -77,8 +78,12 @@
 					$("#visualization_link").attr('href', 'result?rid=' + msg);
 					$("#messagePanel").removeClass("hidden");
 					$("#progress").addClass("hidden");
+					$("#launch-label").hide();
 				}).fail(function(error) {
 					console.log(error);
+					$("#launch-label").hide();
+					$(".error-panel").removeClass("hidden")
+						.find("span.text").text("Error executing scenario. Perhaps Consumer is down ?");
 				});
 			}
 			function result_loaded(msg) {

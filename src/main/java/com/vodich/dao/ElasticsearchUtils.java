@@ -99,6 +99,14 @@ public class ElasticsearchUtils {
 			return null;
 		}
 	}
+	public static void updateScenario(Scenario scenario) {
+		try {
+			byte[] json = mapper.writeValueAsBytes(scenario);
+			esClient.prepareIndex("vodich", "scenario", scenario.getId()).setSource(json).get().getId();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static DeleteResponse deleteScenario(String scenarioId) {
 		return esClient.prepareDelete("vodich", "scenario", scenarioId).execute().actionGet();

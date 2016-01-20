@@ -28,6 +28,8 @@ public class ScenarioServiceImpl implements ScenarioService {
 
 	@Override
 	public void save(Scenario scenario) throws DAOException {
+		scenario.setCreatedAt(new Date());
+		scenario.setTotalLaunches(0);
 		scenarioDAO.save(scenario);
 	}
 	
@@ -43,7 +45,6 @@ public class ScenarioServiceImpl implements ScenarioService {
 				String json = mapper.writeValueAsString(flow);
 				jmsUtils.startConnection();
 				jmsUtils.send(1, json, Integer.parseInt(flow.getConsumer()));
-
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();

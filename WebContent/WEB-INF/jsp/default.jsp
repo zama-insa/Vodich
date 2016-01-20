@@ -26,6 +26,7 @@
 			</c:when>
 			<c:otherwise>
 				<div class="row">
+					<div class="col-md-9">
 					<div class="panel-group" id="accordion" role="tablist"
 						aria-multiselectable="true">
 						<div class="panel panel-default">
@@ -33,7 +34,7 @@
 								<div class="panel-heading" role="tab"
 									id="heading<c:out value="${scenario.id}"/>">
 									<div class="row">
-										<div class="col-xs-6 col-sm-3">
+										<div class="col-md-3">
 											<h4 class="panel-title">
 												<a role="button" data-toggle="collapse"
 													data-parent="#accordion"
@@ -41,16 +42,17 @@
 													aria-expanded="true"
 													aria-controls="<c:out value="${scenario.id}"/>">
 													${scenario.name } </a>
+												<a href="result">
+													<span class="badge" title="${scenario.name} launched ${scenario.totalLaunches} times">${scenario.totalLaunches}</span>
+												</a>
 											</h4>
 										</div>
-										<div class="col-xs-6 col-sm-3">
-											<button class="btn btn-primary" type="button"
+										<div class="col-md-3 col-md-offset-6">
+											<button class="btn btn-success" type="button"
 												onclick="location.href='launch?id=<c:out value="${scenario.id}'"/>">
 												<fmt:message key="message_launch" />
 											</button>
-										</div>
-										<div class="col-xs-6 col-sm-3">
-											<button class="btn btn-primary" type="button"
+											<button class="btn btn-danger" type="button"
 												onclick="location.href='delete?id=<c:out value="${scenario.id}'"/>">
 												<fmt:message key="message_delete" />
 											</button>
@@ -83,6 +85,7 @@
 							</c:forEach>
 
 						</div>
+					</div>
 					</div>
 				</div>
 			</c:otherwise>

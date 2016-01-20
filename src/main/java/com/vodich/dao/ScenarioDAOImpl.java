@@ -25,6 +25,11 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 			throw new DAOException("[DAO] Save scenario failed", e);
 		}
 	}
+	
+	@Override
+	public void update(Scenario scenario) throws DAOException {
+		ElasticsearchUtils.updateScenario(scenario);
+	}
 
 	@Override
 	public boolean delete(String scenarioId) throws DAOException {
