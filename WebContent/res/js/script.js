@@ -10,6 +10,7 @@ $(document).ready(function() {
 	});
 });
 
+
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -24,3 +25,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+
+$(document).ready(function() {              
+    $('#btnExport').click(function(event) { 
+    	var filePath=$('#file').val(); 
+        });
+    });

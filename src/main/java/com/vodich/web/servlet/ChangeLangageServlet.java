@@ -53,9 +53,22 @@ public class ChangeLangageServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+<<<<<<< HEAD
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+=======
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+	    
+	}
+	
+>>>>>>> ba572892abe11002325024eca10f832f9f271c89
 
 
 	}
+<<<<<<< HEAD
+=======
+	
+	
+	
+>>>>>>> ba572892abe11002325024eca10f832f9f271c89
 
 }
