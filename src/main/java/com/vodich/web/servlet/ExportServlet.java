@@ -1,29 +1,18 @@
 package com.vodich.web.servlet;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
-import javax.jms.JMSException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.vodich.business.ScenarioService;
 import com.vodich.business.ScenarioServiceImpl;
-import com.vodich.core.bean.Flow;
-import com.vodich.core.bean.Result;
 import com.vodich.core.bean.Scenario;
-import com.vodich.core.util.WebUtils;
 import com.vodich.dao.DAOException;
 
 
@@ -65,14 +54,10 @@ public class ExportServlet extends HttpServlet {
 					try {
 						scenario = scenarioService.load(scenarioID);
 					
-					 File file = new File("/home/febroshka/git/Vodich/export"+scenario.getName());
-				      ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+						ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 				    	String json = ow.writeValueAsString(scenario);
-				    	System.out.println(json);	     
-				        FileWriter fw = new FileWriter(file.getAbsoluteFile());
-						BufferedWriter bw = new BufferedWriter(fw);
-						bw.write(json);
-						bw.close();
+				    	response.setHeader("Content-Type", "application/json");
+				    	response.getWriter().println(json);
 					} catch (DAOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

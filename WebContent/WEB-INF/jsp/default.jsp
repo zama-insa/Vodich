@@ -47,7 +47,7 @@
 												</a>
 											</h4>
 										</div>
-										<div class="col-md-3 col-md-offset-6">
+										<div class="col-md-4 col-md-offset-5">
 											<button class="btn btn-success" type="button"
 												onclick="location.href='launch?id=<c:out value="${scenario.id}'"/>">
 												<fmt:message key="message_launch" />
@@ -56,13 +56,9 @@
 												onclick="location.href='delete?id=<c:out value="${scenario.id}'"/>">
 												<fmt:message key="message_delete" />
 											</button>
-										</div>
-										<div class="col-xs-6 col-sm-3">
-											<button class="btn btn-primary" type="button" 
-											id="btnExport" onclick="location.href='export?id=<c:out value="${scenario.id}'"/>">
-											<fmt:message key="message_export"/></button>
-	                                        <input type="file" id="ctrl" webkitdirectory directory multiple/>
-										
+											<a class="btn btn-primary" type="button" 
+											id="btnExport" href="export?id=<c:out value="${scenario.id}"/>" target="_blank">
+											<fmt:message key="message_export"/></a>
 										</div>
 									</div>
 								</div>
