@@ -54,6 +54,7 @@ public class ResultServiceImpl implements ResultService {
 		String rid = null;
 			String resultString = jmsUtils.receive(6);
 			if (VodichUtils.isNullOrEmpty(resultString)) {
+				System.err.println("No result found for scenario '" + scenario.getName() + "'");
 				throw new JMSException("No result found for scenario '" + scenario.getName() + "'");
 			}
 			Map<String, Object> resultJson;

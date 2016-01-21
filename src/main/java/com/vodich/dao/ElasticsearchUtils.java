@@ -184,6 +184,7 @@ public class ElasticsearchUtils {
 				return null;
 			}
 			result = mapper.readValue(response.getSourceAsBytes(), Result.class);
+			result.setId(response.getId());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

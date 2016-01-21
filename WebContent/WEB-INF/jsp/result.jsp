@@ -1,4 +1,5 @@
 <t:baseLayout>
+	<script src="res/js/kibana-utils.js"></script>
 	<div class="container">
 		<c:choose>
 			<c:when test="${not empty error}">
@@ -56,7 +57,12 @@
 					</c:when>
 					<c:otherwise>
 						<div class="row" style="margin-bottom: 20px;">
-							<div class="col-md-5"><h3><fmt:message key="message_result" /> ${result.name}</h3></div>
+							<div class="col-md-5">
+								<h3>
+									<fmt:message key="message_result" /> 
+									<span style="color: #298EEA;">${result.name}</span>
+								</h3>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12" id="linechart"></div>
@@ -66,7 +72,6 @@
 							<div class="col-md-3" id="datalost"></div>
 						</div>
 						<br />
-						<script src="res/js/kibana-utils.js"></script>
 						<script>
 							var kibana = new KibanaUtils();
 							$("#linechart").html(
