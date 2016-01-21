@@ -75,13 +75,13 @@
 					<instrumentation>
 						<ignores>
 							<ignore>com.vodich.web.*</ignore>
-							<ignore>com.vodich.util.WebUtils</ignore>
-							<ignore>com.vodich.util.JMSUtils</ignore>
+							<ignore>com.vodich.util.WebUtils.class</ignore>
+							<ignore>com.vodich.util.JMSUtils.class</ignore>
 						</ignores>
 						<excludes>
 							<exclude>com/vodich/web/**/*.class</exclude>
 							<exclude>com/vodich/util/WebUtils.class</exclude>
-							<exclude>com/vodich/util/JMSUtilsTest.class</exclude>
+							<exclude>com/vodich/util/JMSUtils.class</exclude>
 						</excludes>
 					</instrumentation>
 				</configuration>
