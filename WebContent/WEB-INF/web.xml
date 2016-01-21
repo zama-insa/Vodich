@@ -23,8 +23,4 @@
 		<param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
 		<param-value>de</param-value>
 	</context-param>
-	<filter-mapping>
-		<filter-name>SessionStateFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 </web-app>

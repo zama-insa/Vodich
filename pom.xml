@@ -78,6 +78,11 @@
 							<ignore>com.vodich.util.WebUtils</ignore>
 							<ignore>com.vodich.util.JMSUtils</ignore>
 						</ignores>
+						<excludes>
+							<exclude>com/vodich/web/**/*.class</exclude>
+							<exclude>com/vodich/util/WebUtils.class</exclude>
+							<exclude>com/vodich/util/JMSUtilsTest.class</exclude>
+						</excludes>
 					</instrumentation>
 				</configuration>
 				<executions>
