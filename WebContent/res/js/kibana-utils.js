@@ -32,7 +32,7 @@ KibanaUtils.prototype.dataLostIframe = function(rid) {
 	return "<iframe src=\"http://localhost:5601/app/kibana#/visualize/edit/Data-Lost?" +
 			"embed&_g=(refreshInterval:(display:Off,pause:!f,value:0)," +
 			"time:(from:now-15m,mode:quick,to:now))&_a=(filters:!(),linked:!f," +
-			"query:(query_string:(analyze_wildcard:!t,query:'*'))," +
+			"query:(query_string:(analyze_wildcard:!t,query:'_type:%22" + rid + "%22'))," +
 			"vis:(aggs:!((id:'1',params:(field:time,values:!(-1))," +
 			"schema:metric,type:percentile_ranks)),listeners:(),params:(fontSize:'30'),type:metric))\"" + 
 			" height=\"150\" width=\"200\">" +
