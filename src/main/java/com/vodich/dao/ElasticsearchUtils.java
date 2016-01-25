@@ -210,7 +210,8 @@ public class ElasticsearchUtils {
 	}
 
 
-	public static IndexResponse saveScenarioResult(Result result) {
+
+	public static IndexResponse saveScenarioResult(Result result)  {
 		try {
 
 
@@ -226,7 +227,9 @@ public class ElasticsearchUtils {
 				@SuppressWarnings("unchecked")
 				Map<String, Object> mo = (Map<String, Object>) o;
 				XContentBuilder builder;
+			
 				try {
+					
 					builder = XContentFactory.jsonBuilder()
 							.startObject()
 							.field("id", mo.get("id"))

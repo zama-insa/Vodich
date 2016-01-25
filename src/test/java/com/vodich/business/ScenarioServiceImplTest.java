@@ -61,13 +61,13 @@ public class ScenarioServiceImplTest {
 		scenarioServiceImpl.save(s);
 	}
 	
-	@Test
+	@Test(expected =DAOException.class)
 	public void testLoadByIdNonExistScenario() throws DAOException {
 		when(scenarioDAOMock.load("42")).thenReturn(null);
 		assertEquals(scenarioServiceImpl.load("42"), null);
 	}
 
-	@Test(expected = DAOException.class)
+	@Test(expected=DAOException.class)
 	public void testLaunchNonExistScenario() throws DAOException, JMSException {
 		when(scenarioDAOMock.load("42")).thenReturn(null);
 		scenarioServiceImpl.launch("42");

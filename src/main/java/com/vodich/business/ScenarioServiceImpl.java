@@ -50,6 +50,7 @@ public class ScenarioServiceImpl implements ScenarioService {
 
 	@Override
 	public boolean delete(String scenarioId) throws DAOException {
+		
 		return scenarioDAO.delete(scenarioId);
 
 	}

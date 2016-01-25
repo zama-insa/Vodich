@@ -36,3 +36,16 @@
 		</div>
 	</div>
 </div>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Vodich</title>
+    <link href="res/css/main.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="res/lib/progressBar/progressbar.min.js"></script>
+	<script src="res/lib/timeline/vis.min.js"></script>
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+	<link href="res/lib/timeline/vis.min.css" rel ="stylesheet"/>
+    <link href="res/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="res/lib/font-awesome-4.5.0/css/font-awesome.min.css" rel ="stylesheet"/>
+</head>
