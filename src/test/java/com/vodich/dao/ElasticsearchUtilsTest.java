@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.elasticsearch.action.index.IndexResponse;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -137,5 +138,27 @@ public class ElasticsearchUtilsTest {
 		resultList.add(a1);
 		result.setResult(resultList);
 		assertTrue(ElasticsearchUtils.saveScenarioResult(result).isCreated());
+	}
+	
+	@Test
+	public void loadScenarioResultDoNotExistsTest() {
+		assertNull(ElasticsearchUtils.loadScenarioResult("_load_result_test_do_not_exists"));
+	}
+	
+	@Test
+	public void loadScenarioResultExistsTest() {
+		Result result = new Result();
+		List<Object> resultList = new ArrayList<>();
+		Map<String, Object> a1 = new HashMap<>(); a1.put("id", "1"); a1.put("time", "2");
+		resultList.add(a1);
+		result.setResult(resultList);
+		result.setName("toto");
+		IndexResponse i = ElasticsearchUtils.saveScenarioResult(result);
+		assertTrue("toto".equals(ElasticsearchUtils.loadScenarioResult(i.getId()).getName()));
+	}
+	
+	@Test
+	public void loadAllScenarioResultTest() {
+		ElasticsearchUtils.loadScenarii();
 	}
 }

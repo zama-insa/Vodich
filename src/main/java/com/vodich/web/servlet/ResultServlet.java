@@ -23,9 +23,9 @@ public class ResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String PARAM_RESULT_ID = "rid";
 	private static final String ATT_ERROR_MSG = "error";
-	private static final String ATT_RESULT_ID = PARAM_RESULT_ID;
 	private static final String ATT_RESULT_LIST = "resultList";
 	private static final String ATT_LIST_VIEW_MODE = "listView";
+	private static final String ATT_RESULT = "result";
 	private ResultService resultService;
        
    @Override
@@ -50,7 +50,7 @@ public class ResultServlet extends HttpServlet {
 			WebUtils.forward(request, response, "result.jsp");
 			return;
 		}
-		request.setAttribute(ATT_RESULT_ID, resultId);
+		request.setAttribute(ATT_RESULT, result);
 		WebUtils.forward(request, response, "result.jsp");
 	}
 
@@ -58,7 +58,6 @@ public class ResultServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -1,0 +1,22 @@
+{
+  "id" : "AVJbyDH8P_fhyVEiUXHw",
+  "name" : "678",
+  "createdAt" : null,
+  "flows" : [ {
+    "consumer" : "1",
+    "producer" : "1",
+    "frequency" : 9.0,
+    "messageLoad" : 0,
+    "processTime" : 89.0,
+    "start" : 9,
+    "stop" : 8
+  }, {
+    "consumer" : "1",
+    "producer" : "1",
+    "frequency" : 56.0,
+    "messageLoad" : 0,
+    "processTime" : 87.0,
+    "start" : 0,
+    "stop" : 45
+  } ]
+}

@@ -5,10 +5,12 @@ import java.util.List;
 
 public class Result extends AbstractVodichBean {
 	private String id;
+	private String name;
 	private String scenarioId;
 	private Date launchTime;
 	private Date finishTime;
 	private List<Object> result;
+	private Integer launchNum;
 	public String getId() {
 		return id;
 	}
@@ -44,5 +46,18 @@ public class Result extends AbstractVodichBean {
 	public boolean equals(Object obj) {
 		Result that = (Result) obj;
 		return this.id == that.id;
+	}
+	public void setLaunchNum(Integer launchNum) {
+		this.launchNum = launchNum;
+	}
+	
+	public Integer getLaunchNum() {
+		return launchNum;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }

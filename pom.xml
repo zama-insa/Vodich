@@ -72,6 +72,18 @@
 					<formats>
 						<format>xml</format>
 					</formats>
+					<instrumentation>
+						<ignores>
+							<ignore>com.vodich.web.*</ignore>
+							<ignore>com.vodich.core.util.WebUtils</ignore>
+							<ignore>com.vodich.core.util.JMSUtils</ignore>
+						</ignores>
+						<excludes>
+							<exclude>com/vodich/web/**/*.class</exclude>
+							<exclude>com/vodich/core/util/WebUtils.class</exclude>
+							<exclude>com/vodich/core/util/JMSUtils.class</exclude>
+						</excludes>
+					</instrumentation>
 				</configuration>
 				<executions>
 					<execution>
@@ -132,8 +144,28 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.10.19</version>
+			<scope>test</scope>
 		</dependency>
+<<<<<<< HEAD
 
+=======
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>8.0.29</version>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>1.6.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+>>>>>>> 59c46cac0a10b901e45866a515ad16ab51b85d8a
 	</dependencies>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

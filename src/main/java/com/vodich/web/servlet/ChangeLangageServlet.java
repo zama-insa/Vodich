@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.core.Config;
 
-import com.vodich.core.util.WebUtils;
+import com.vodich.core.util.VodichUtils;
 
 /**
  * Servlet implementation class ChangeLangage
@@ -19,14 +19,15 @@ import com.vodich.core.util.WebUtils;
 @WebServlet("/changelangage")
 public class ChangeLangageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ChangeLangageServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	private static final String PARAM_REDIRECT_URL = "redirectURL";
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ChangeLangageServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,52 +35,24 @@ public class ChangeLangageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
-	    Locale locale = (Locale) Config.get(session, Config.FMT_LOCALE);
-		//System.out.println("Parametre langage recu : "+request.getParameter("language"));
-	    if ( request.getParameter("language") != null) {
-	    	locale = new Locale(request.getParameter("language"));
-	     }
-	     Config.set(session, Config.FMT_LOCALE, locale);
-	     WebUtils.forward(request, response, "create-scenario.jsp");
+		Locale locale = (Locale) Config.get(session, Config.FMT_LOCALE);
+		if ( request.getParameter("language") != null) {
+			locale = new Locale(request.getParameter("language"));
+		}
+		Config.set(session, Config.FMT_LOCALE, locale);
+		String redirectURL = request.getParameter(PARAM_REDIRECT_URL);
+		request.getSession().setAttribute("language", locale.toString());
+		if (!VodichUtils.isNullOrEmpty(redirectURL)) {
+			response.sendRedirect(redirectURL);
+		} else {
+			response.sendRedirect("default");
+		}
+		//WebUtils.forward(request, response, "create-scenario.jsp");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	    
 	}
-	
-
-	private void actionchangelangage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(true);
-	     Locale locale = (Locale) Config.get(session, Config.FMT_LOCALE);
-	     if (locale == null) {
-	         locale = request.getLocale();
-	     }
-	     if (request.getParameter("language") != null) {
-	         locale = new Locale(request.getParameter("language"));
-	     }
-	     Config.set(session, Config.FMT_LOCALE, locale);
-	     WebUtils.forward(request, response, "create-scenario.jsp");
-	     
-	}
-	
-	/*
-	 *  HttpSession session = request.getSession(true);
-     Locale locale = (Locale) Config.get(session, Config.FMT_LOCALE);
- 
-     if (locale == null) {
-         locale = request.getLocale();
-     }
-     if (request.getParameter("language") != null) {
-         locale = new Locale(request.getParameter("language"));
-     }
-     Config.set(session, Config.FMT_LOCALE, locale);
- 
-     return null;
-	 */
-	
-
 }

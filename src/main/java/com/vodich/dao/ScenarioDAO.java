@@ -8,6 +8,8 @@ public interface ScenarioDAO {
 
 	public void save(Scenario scenario) throws DAOException;
 
+	public void update(Scenario scenario) throws DAOException;
+
 	public boolean delete(String scenarioId) throws DAOException;
 
 	public Scenario load(String scenarioId) throws DAOException;

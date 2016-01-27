@@ -25,6 +25,11 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 			throw new DAOException("[DAO] Save scenario failed", e);
 		}
 	}
+	
+	@Override
+	public void update(Scenario scenario) throws DAOException {
+		ElasticsearchUtils.updateScenario(scenario);
+	}
 
 	@Override
 	public boolean delete(String scenarioId) throws DAOException {
@@ -33,7 +38,7 @@ public class ScenarioDAOImpl implements ScenarioDAO {
 			DeleteResponse response = ElasticsearchUtils.deleteScenario(scenarioId);
 			return response.isFound();
 		} catch (Exception e) {
-			throw new DAOException("[DAO] Save scenario failed", e);
+			throw new DAOException("[DAO] Delete scenario failed", e);
 		}
 
 	}

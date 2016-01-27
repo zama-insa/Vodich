@@ -26,11 +26,11 @@
 			<div class="dropdown">
 				<button class="btn btn-info dropdown-toggle" type="button"
 					data-toggle="dropdown">
-					Create scenario <span class="caret"></span>
+					<fmt:message key="message_creation"/> <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="create">Create scenario</a></li>
-					<li><a href="import">Import scenario</a></li>
+					<li><a href="create"><fmt:message key="message_creation"/></a></li>
+					<li><a href="import"><fmt:message key="message_importt"/></a></li>
 				</ul>
 			</div>
 		</div>

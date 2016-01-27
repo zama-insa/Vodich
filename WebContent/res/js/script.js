@@ -3,12 +3,13 @@
  */
 $(document).ready(function() {              
 	$('#btnSubmitFrench').click(function(event) {   	
-		location.href="changelangage?language=fr"
+		location.href="changelangage?language=fr&redirectURL=" + window.location.href
 	});
 	$('#btnSubmitEnglish').click(function(event) { 
-		location.href="changelangage?language=en"
+		location.href="changelangage?language=en&redirectURL=" + window.location.href
 	});
 });
+
 
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -24,3 +25,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+
+$(document).ready(function() {              
+    $('#btnExport').click(function(event) { 
+    	var filePath=$('#file').val(); 
+        });
+    });

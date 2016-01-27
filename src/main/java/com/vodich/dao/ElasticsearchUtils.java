@@ -99,6 +99,14 @@ public class ElasticsearchUtils {
 			return null;
 		}
 	}
+	public static void updateScenario(Scenario scenario) {
+		try {
+			byte[] json = mapper.writeValueAsBytes(scenario);
+			esClient.prepareIndex("vodich", "scenario", scenario.getId()).setSource(json).get().getId();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static DeleteResponse deleteScenario(String scenarioId) {
 		return esClient.prepareDelete("vodich", "scenario", scenarioId).execute().actionGet();
@@ -176,6 +184,7 @@ public class ElasticsearchUtils {
 				return null;
 			}
 			result = mapper.readValue(response.getSourceAsBytes(), Result.class);
+			result.setId(response.getId());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.vodich.business;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.jms.JMSException;
@@ -24,6 +25,8 @@ public class ScenarioServiceImpl implements ScenarioService {
 
 	@Override
 	public void save(Scenario scenario) throws DAOException {
+		scenario.setCreatedAt(new Date());
+		scenario.setTotalLaunches(0);
 		scenarioDAO.save(scenario);
 	}
 	
@@ -39,7 +42,6 @@ public class ScenarioServiceImpl implements ScenarioService {
 				String json = mapper.writeValueAsString(flow);
 				jmsUtils.startConnection();
 				jmsUtils.send(1, json, Integer.parseInt(flow.getConsumer()));
-
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -47,7 +49,6 @@ public class ScenarioServiceImpl implements ScenarioService {
 	}
 	
 	
-
 	@Override
 	public boolean delete(String scenarioId) throws DAOException {
 		
