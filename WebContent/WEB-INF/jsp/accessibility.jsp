@@ -1,22 +1,40 @@
 <t:baseLayout>
 <div class="container">
-  <h1>Web Browsers</h1>
-  <p>Google Chrome, Firefox, and Internet Explorer are the most used browsers today.</p>
+  <h1 class='bluefont'><fmt:message key="message_infoproject0" /></h1>
+  <p><fmt:message key="message_infoproject" /></p>
+  <p><fmt:message key="message_infoproject2" /></p>
+  <p><fmt:message key="message_infoproject3" /></p>
+  <p><fmt:message key="message_infoproject4" /></p>
 
   <article>
-    <h1>Google Chrome</h1>
-    <p>Google Chrome is a free, open-source web browser developed by Google, released in 2008.</p>
+    <h1 class='bluefont'><fmt:message key="message_architecture" /></h1>
+    <img src="res/img/architecture.png" />
+		
   </article>
 
   <article>
-    <h1>Internet Explorer</h1>
-    <p>Internet Explorer is a free web browser from Microsoft, released in 1995.</p>
+    <h1 class='bluefont'><fmt:message key="message_actions" /></h1>
+    
+     <h3><fmt:message key="message_action" /></h3>
+     <p><fmt:message key="message_actiont" /></p>
+    
+     <h3><fmt:message key="message_action1" /></h3>
+     <p><fmt:message key="message_action1t" /></p>
+    
+     <h3><fmt:message key="message_action2" /></h3>
+     <p><fmt:message key="message_action2t" /></p>
+     
+     <h3><fmt:message key="message_action3" /></h3>
+     <p><fmt:message key="message_action3t" /></p>
+    
+     <h3><fmt:message key="message_action4" /></h3>
+     <p><fmt:message key="message_action4t" /></p>
+    
+     <h3><fmt:message key="message_action5" /></h3>
+     <p><fmt:message key="message_action5t" /></p>
   </article>
 
-  <article>
-    <h1>Mozilla Firefox</h1>
-    <p>Firefox is a free, open-source web browser from Mozilla, released in 2004.</p>
-  </article>
+ 
 </div>
 </t:baseLayout>
 
