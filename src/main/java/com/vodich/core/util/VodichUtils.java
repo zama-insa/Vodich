@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class VodichUtils {
 
-	public static final int NB_CONSUMER = 2;
+	public static final int NB_CONSUMER = 5;
 	public static boolean isNullOrEmpty(String string) {
 		return string == null || "".equals(string.trim());
 	}

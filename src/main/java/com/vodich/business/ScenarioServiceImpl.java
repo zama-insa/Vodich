@@ -45,6 +45,8 @@ public class ScenarioServiceImpl implements ScenarioService {
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
+		} catch (UnsupportedOperationException e) {
+			e.printStackTrace();
 		}
 	}
 	

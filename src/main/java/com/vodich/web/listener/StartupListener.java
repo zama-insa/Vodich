@@ -28,6 +28,15 @@ public class StartupListener implements ServletContextListener {
 	@Resource(name="jms/myTopic2")
 	private Topic topic2;
 	
+	@Resource(name="jms/myTopic3")
+	private Topic topic3;
+	
+	@Resource(name="jms/myTopic4")
+	private Topic topic4;
+	
+	@Resource(name="jms/myTopic5")
+	private Topic topic5;
+	
 	private Topic[] topics = new Topic[VodichUtils.NB_CONSUMER];
     public void contextDestroyed(ServletContextEvent arg0)  {
     	ElasticsearchUtils.close();
@@ -42,6 +51,9 @@ public class StartupListener implements ServletContextListener {
     	
     	topics[0] =  topic1;
     	topics[1] = topic2;
+    	topics[2] = topic3;
+    	topics[2] = topic4;
+    	topics[4] = topic5;
     	try {
 			JMSUtils.init(connectionFactory, queue, topics);
 		} catch (Exception e) {
