@@ -231,10 +231,13 @@ public class ElasticsearchUtils {
 			// save bulk result units later (for kibana graphs)
 			BulkRequestBuilder requestBuilder = esClient.prepareBulk();
 			if (result.getResult() == null) return indexResponse;
-			for (Object o: result.getResult()) {
+			for (Object singleResult : result.getResult()) {
 
 				@SuppressWarnings("unchecked")
-				Map<String, Object> mo = (Map<String, Object>) o;
+				Map<String, Object> singleResultMap = (Map<String, Object>) singleResult;
+				List<Object> results_unit = (List<Object>) singleResultMap.get("messageResults");
+				for (Object o: results_unit) {
+					Map<String, Object> mo = (Map<String, Object>) o;
 				XContentBuilder builder;
 			
 				try {
@@ -243,6 +246,7 @@ public class ElasticsearchUtils {
 							.startObject()
 							.field("id", mo.get("id"))
 							.field("time", mo.get("time"))
+							.field("consumer", singleResultMap.get("consumer"))
 							.endObject();
 				} catch (IOException e) {
 					continue;
@@ -256,6 +260,7 @@ public class ElasticsearchUtils {
 			BulkResponse bulkResponse = requestBuilder.execute().actionGet();
 			int items= bulkResponse.getItems().length;
 			System.out.println("indexed [" + items + "] items, with failures? [" + bulkResponse.hasFailures()  + "]");
+			}
 			return indexResponse;
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();

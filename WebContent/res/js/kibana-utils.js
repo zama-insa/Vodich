@@ -9,7 +9,8 @@ KibanaUtils.prototype.lineChartIframe = function(rid, width, height) {
 			"query:(query_string:(analyze_wildcard:!t,query:'_type:%22" + rid + "%22'))," +
 			"vis:(aggs:!((id:'1',params:(field:time),schema:metric,type:avg)," +
 			"(id:'2',params:(field:id,order:asc,orderBy:_term,size:100000)," +
-			"schema:segment,type:terms)),listeners:()," +
+			"schema:segment,type:terms)," +
+			"(id:'3',params:(field:consumer,order:desc,orderBy:_term,size:5),schema:group,type:terms)),listeners:()," +
 			"params:(addLegend:!f,addTimeMarker:!f,addTooltip:!f,defaultYExtents:!f," +
 			"drawLinesBetweenPoints:!t,interpolate:linear,radiusRatio:9,scale:linear," +
 			"setYExtents:!f,shareYAxis:!t,showCircles:!t,smoothLines:!f,times:!(),yAxis:()),type:line))\"" +
