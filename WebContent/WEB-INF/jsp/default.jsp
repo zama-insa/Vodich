@@ -34,7 +34,7 @@
 								<div class="panel-heading" role="tab"
 									id="heading<c:out value="${scenario.id}"/>">
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-5">
 											<h4 class="panel-title">
 												<a role="button" data-toggle="collapse"
 													data-parent="#accordion"
@@ -47,7 +47,7 @@
 												</a>
 											</h4>
 										</div>
-										<div class="col-md-4 col-md-offset-2">
+										<div class="col-md-5 col-md-offset-2">
 											<button class="btn btn-success" type="button"
 												onclick="location.href='launch?id=<c:out value="${scenario.id}'"/>">
 												<fmt:message key="message_launch" />
