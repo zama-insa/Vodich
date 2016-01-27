@@ -1,6 +1,7 @@
 package com.vodich.business;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -52,31 +53,36 @@ public class ResultServiceImpl implements ResultService {
 
 	public String actualizeResult(Scenario scenario) throws IOException, JMSException {
 		String rid = null;
+		List<Object> resultsJson = new ArrayList<>();
+		for (int i = 0; i < scenario.getFlows().size(); i++) {
 			String resultString = jmsUtils.receive(6);
 			if (VodichUtils.isNullOrEmpty(resultString)) {
 				throw new JMSException("No result found for scenario '" + scenario.getName() + "'");
 			}
+			System.out.println(resultString);
 			Map<String, Object> resultJson;
 			try {
 				resultJson = mapper.readValue(resultString, new TypeReference<Map<String, Object>>() {});
 			} catch (IOException e) {
 				return null;
 			}
-			Result result = new Result();
-			result.setFinishTime(new Date());
-			scenario.setTotalLaunches(scenario.getTotalLaunches() + 1);
-			result.setLaunchNum(scenario.getTotalLaunches());
-			result.setName(scenario.getName() + " [" + result.getLaunchNum() + "]");
-			result.setScenarioId(scenario.getId());
-			result.setResult((List<Object>) resultJson.get("messageResults"));
-			try {
-				scenarioDAO.update(scenario);
-			} catch (DAOException e) {
-				e.printStackTrace();
-				throw new IOException("Error updating scenario + '" + scenario.getName() + "'");
-			}
-			rid = resultDAO.save(result);
-			jmsUtils.stopConnection();
+			resultsJson.add(resultJson);
+		}
+		Result result = new Result();
+		result.setFinishTime(new Date());
+		scenario.setTotalLaunches(scenario.getTotalLaunches() + 1);
+		result.setLaunchNum(scenario.getTotalLaunches());
+		result.setName(scenario.getName() + " [" + result.getLaunchNum() + "]");
+		result.setScenarioId(scenario.getId());
+		result.setResult(resultsJson);
+		try {
+			scenarioDAO.update(scenario);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new IOException("Error updating scenario + '" + scenario.getName() + "'");
+		}
+		rid = resultDAO.save(result);
+		jmsUtils.stopConnection();
 		return rid;
 	}
 }
